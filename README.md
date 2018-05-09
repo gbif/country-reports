@@ -1,2 +1,2 @@
-# country-reports
+# Country reports
 Nodejs country report runner
