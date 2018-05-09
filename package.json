@@ -2,6 +2,10 @@
   "name": "gbif-country-reports",
   "version" : "0.1",
   "main": "report.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gbif/country-reports"
+  },
   "dependencies": {
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
