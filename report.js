@@ -92,7 +92,7 @@ function runReport(countryCode, locale, year, targetStream) {
         };
             compileReport(countryCode, reportOptions, targetStream);
     }).catch(function(err) {
-        console.log(err);
+        throw err;
     });
 }
 
