@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const i18n = require('i18n');
+const i18n = require('./i18n');
 
 function header(doc, options) {
         doc.image(__dirname + '/assets/GBIF-2015-full.png', 40, 45 + options.Y_OFFSET, {width: 180});

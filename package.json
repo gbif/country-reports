@@ -1,6 +1,6 @@
 {
   "name": "gbif-country-reports",
-  "version" : "0.1.0",
+  "version": "0.1.0",
   "main": "report.js",
   "repository": {
     "type": "git",
@@ -9,10 +9,10 @@
   "dependencies": {
     "eslint": "^4.19.1",
     "eslint-config-google": "^0.9.1",
-    "i18n": "^0.8.3",
+    "i18n-2": "",
     "lodash": "^4.17.10",
     "pdfkit": "^0.8.3",
     "request": "^2.85.0",
     "request-promise": "^4.2.2"
-    }
+  }
 }

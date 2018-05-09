@@ -1,7 +1,7 @@
 const PDFDocument = require('./pdfkitwithtables');
-const fs = require('fs');
+// const fs = require('fs');
 const rp = require('request-promise');
-const i18n = require('i18n');
+const i18n = require('./i18n');
 const documentGenerator = require('./documentGenerator');
 const dataProvider = require('./dataProvider');
 const mockdata = require('./mockDataProvider');
@@ -67,11 +67,6 @@ function runReport(countryCode, locale, year, targetStream) {
     ];
 
     Promise.all(promises).then(function(res) {
-        i18n.configure({
-            directory: __dirname + '/locales',
-            objectNotation: true,
-            register: global
-        });
         i18n.setLocale(locale);
         let reportOptions = {year: year,
             globalPublicationsChart: new Buffer(res[0], 'base64'),
@@ -106,5 +101,5 @@ module.exports = {
 };
 
 // Test it:
-runReport('DK', 'da', 2017, fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + 'DK' + '.pdf'));
+// runReport('US', 'da', 2017, fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + 'US' + '.pdf'));
 
