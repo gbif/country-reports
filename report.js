@@ -1,5 +1,5 @@
 const PDFDocument = require('./pdfkitwithtables');
-// const fs = require('fs');
+const fs = require('fs');
 const rp = require('request-promise');
 const i18n = require('./i18n');
 const documentGenerator = require('./documentGenerator');
@@ -101,5 +101,5 @@ module.exports = {
 };
 
 // Test it:
-// runReport('US', 'da', 2017, fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + 'US' + '.pdf'));
+runReport('US', 'da', 2017, fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + 'US' + '.pdf'));
 

@@ -8,7 +8,7 @@ function header(doc, options) {
 
         doc.font('Helvetica').fontSize(26)
                 .text(i18n.__('countryReport'), 320, 58 + options.Y_OFFSET);
-        doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowercase() + '.png', 510, 55 + options.Y_OFFSET, {width: 30});
+        doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 510, 55 + options.Y_OFFSET, {width: 30});
         // some vector graphics
 
         doc.fontSize(26)
@@ -203,7 +203,7 @@ function dataMobilization(doc, options) {
 }
 
 function secondaryPageHeader(doc, options, pageNumber, totalPages) {
-        doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowercase() + '.png', 50, 50 + options.Y_OFFSET, {width: 30});
+        doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 50, 50 + options.Y_OFFSET, {width: 30});
         doc.image(__dirname + '/assets/green_bar.png', 110, 52 + options.Y_OFFSET, {height: 20, width: 440});
         doc.text(pageNumber + ' | ' + totalPages, 530, 82 + options.Y_OFFSET);
         doc.moveTo(50, 100 + options.Y_OFFSET)
