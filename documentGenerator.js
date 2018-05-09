@@ -2,13 +2,13 @@ const _ = require('lodash');
 const i18n = require('i18n');
 
 function header(doc, options) {
-        doc.image('assets/GBIF-2015-full.png', 40, 45 + options.Y_OFFSET, {width: 180});
-        doc.image('assets/green_bar.png', 30, 95 + options.Y_OFFSET, {height: 20, width: 540});
+        doc.image(__dirname + '/assets/GBIF-2015-full.png', 40, 45 + options.Y_OFFSET, {width: 180});
+        doc.image(__dirname + '/assets/green_bar.png', 30, 95 + options.Y_OFFSET, {height: 20, width: 540});
 
 
         doc.font('Helvetica').fontSize(26)
                 .text(i18n.__('countryReport'), 320, 58 + options.Y_OFFSET);
-        doc.image('assets/flags/' + options.countryCode + '.png', 510, 55 + options.Y_OFFSET, {width: 30});
+        doc.image(__dirname + '/assets/flags/' + options.countryCode + '.png', 510, 55 + options.Y_OFFSET, {width: 30});
         // some vector graphics
 
         doc.fontSize(26)
@@ -38,7 +38,7 @@ function accessAndUsage(doc, options) {
                 .fontSize(8)
                 .text(i18n.__('figure') + ' 1. ' + i18n.__('numPeerReviedPublicationsCitingGBIF'), 83, 410 + options.Y_OFFSET, {continued: true, width: 200, align: 'center'});
 
-        doc.image('assets/green_circle.png', 330, 250 + options.Y_OFFSET, {width: 180});
+        doc.image(__dirname + '/assets/green_circle.png', 330, 250 + options.Y_OFFSET, {width: 180});
 
         doc.font('Helvetica').fontSize(10)
                 .text(i18n.__('researchersFrom'), 260, 280 + options.Y_OFFSET, {width: 180, align: 'center'});
@@ -66,16 +66,16 @@ function datAvailability(doc, options) {
         doc.font('Helvetica-Bold').fontSize(12)
                 .text('> ' + i18n.__('dataAvailability') + ' ' + i18n.__('in') + ' ' + options.countryName, 50, 450 + options.Y_OFFSET);
 
-        doc.image('assets/kingdoms/animalia.png', 55, 470 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/kingdoms/plantae.png', 180, 470 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/kingdoms/fungi.png', 305, 470 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/kingdoms/unknown.png', 430, 470 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/kingdoms/animalia.png', 55, 470 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/kingdoms/plantae.png', 180, 470 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/kingdoms/fungi.png', 305, 470 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/kingdoms/unknown.png', 430, 470 + options.Y_OFFSET, {width: 50});
 
-        doc.image('assets/kingdoms/protozoa.png', 50, 545 + options.Y_OFFSET, {width: 40});
-        doc.image('assets/kingdoms/bacteria.png', 150, 545 + options.Y_OFFSET, {width: 40});
-        doc.image('assets/kingdoms/virus.png', 250, 545 + options.Y_OFFSET, {width: 40});
-        doc.image('assets/kingdoms/chromista.png', 350, 545 + options.Y_OFFSET, {width: 40});
-        doc.image('assets/kingdoms/archaea.png', 450, 545 + options.Y_OFFSET, {width: 40});
+        doc.image(__dirname + '/assets/kingdoms/protozoa.png', 50, 545 + options.Y_OFFSET, {width: 40});
+        doc.image(__dirname + '/assets/kingdoms/bacteria.png', 150, 545 + options.Y_OFFSET, {width: 40});
+        doc.image(__dirname + '/assets/kingdoms/virus.png', 250, 545 + options.Y_OFFSET, {width: 40});
+        doc.image(__dirname + '/assets/kingdoms/chromista.png', 350, 545 + options.Y_OFFSET, {width: 40});
+        doc.image(__dirname + '/assets/kingdoms/archaea.png', 450, 545 + options.Y_OFFSET, {width: 40});
 
         // First row of kingdoms
         doc.font('Helvetica-Oblique')
@@ -173,7 +173,7 @@ function dataMobilization(doc, options) {
         doc.font('Helvetica-Bold').fontSize(12)
                 .text('> ' + i18n.__('dataMobilization'), 50, 607 + options.Y_OFFSET);
 
-        doc.image('assets/green_circle.png', 70, 620 + options.Y_OFFSET, {width: 180});
+        doc.image(__dirname + '/assets/green_circle.png', 70, 620 + options.Y_OFFSET, {width: 180});
         doc.fillColor('black').font('Helvetica').fontSize(10)
                 .text(i18n.__('institutionsFrom'), 70, 645 + options.Y_OFFSET, {width: 180, align: 'center'});
 
@@ -203,8 +203,8 @@ function dataMobilization(doc, options) {
 }
 
 function secondaryPageHeader(doc, options, pageNumber, totalPages) {
-        doc.image('assets/flags/' + options.countryCode + '.png', 50, 50 + options.Y_OFFSET, {width: 30});
-        doc.image('assets/green_bar.png', 110, 52 + options.Y_OFFSET, {height: 20, width: 440});
+        doc.image(__dirname + '/assets/flags/' + options.countryCode + '.png', 50, 50 + options.Y_OFFSET, {width: 30});
+        doc.image(__dirname + '/assets/green_bar.png', 110, 52 + options.Y_OFFSET, {height: 20, width: 440});
         doc.text(pageNumber + ' | ' + totalPages, 530, 82 + options.Y_OFFSET);
         doc.moveTo(50, 100 + options.Y_OFFSET)
                 .lineTo(550, 100 + options.Y_OFFSET)
@@ -218,7 +218,7 @@ function dataDownloads(doc, options) {
                 .text(i18n.__('accessAndUsage'), 50, 115 + options.Y_OFFSET)
                 .fillColor('#509e2f').text(i18n.__('dataDownloadsFromUsersIn') + ' ' + options.countryName, 50, 135 + options.Y_OFFSET);
 
-        doc.image('assets/green_circle.png', 70, 170 + options.Y_OFFSET, {width: 180});
+        doc.image(__dirname + '/assets/green_circle.png', 70, 170 + options.Y_OFFSET, {width: 180});
         doc.fillColor('black').font('Helvetica').fontSize(10)
                 .text(i18n.__('usersFrom'), 70, 195 + options.Y_OFFSET, {width: 180, align: 'center'});
 
@@ -308,10 +308,10 @@ function selectedTaxonomicGroups(doc, options) {
                 .fillColor('#509e2f').text(i18n.__('totalDataAvailableSelectedGroups') + ' ' + options.countryName, 50, 135 + options.Y_OFFSET);
 
         // First row of images
-        doc.image('assets/selectedGroups/mammals.png', 55, 170 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/selectedGroups/birds.png', 180, 170 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/selectedGroups/bonyFish.png', 305, 170 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/selectedGroups/amphibians.png', 430, 170 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/mammals.png', 55, 170 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/birds.png', 180, 170 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/bonyFish.png', 305, 170 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/amphibians.png', 430, 170 + options.Y_OFFSET, {width: 50});
 
         // first row of text
         doc.fillColor('black').font('Helvetica-Oblique')
@@ -355,9 +355,9 @@ function selectedTaxonomicGroups(doc, options) {
                 .text(i18n.__(i18n.__('occurrences')));
 
         // second row of images
-        doc.image('assets/selectedGroups/insects.png', 117, 245 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/selectedGroups/reptiles.png', 245, 245 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/selectedGroups/molluscs.png', 365, 245 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/insects.png', 117, 245 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/reptiles.png', 245, 245 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/molluscs.png', 365, 245 + options.Y_OFFSET, {width: 50});
 
         // second row of texts
         doc.fillColor('black').font('Helvetica-Oblique')
@@ -389,10 +389,10 @@ function selectedTaxonomicGroups(doc, options) {
                 .text(i18n.__(i18n.__('occurrences')));
 
         // third row of images
-        doc.image('assets/selectedGroups/arachnids.png', 55, 320 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/selectedGroups/floweringPlants.png', 180, 320 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/selectedGroups/gymnosperms.png', 305, 320 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/selectedGroups/ferns.png', 430, 320 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/arachnids.png', 55, 320 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/floweringPlants.png', 180, 320 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/gymnosperms.png', 305, 320 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/ferns.png', 430, 320 + options.Y_OFFSET, {width: 50});
         // third roww of texts
         doc.fillColor('black').font('Helvetica-Oblique')
                 .fontSize(10)
@@ -435,9 +435,9 @@ function selectedTaxonomicGroups(doc, options) {
                 .text(i18n.__(i18n.__('occurrences')));
 
         // fourth row of images
-        doc.image('assets/selectedGroups/mosses.png', 117, 395 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/selectedGroups/sacFungi.png', 245, 395 + options.Y_OFFSET, {width: 50});
-        doc.image('assets/selectedGroups/basidiomycota.png', 365, 395 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/mosses.png', 117, 395 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/sacFungi.png', 245, 395 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/basidiomycota.png', 365, 395 + options.Y_OFFSET, {width: 50});
         // fourth row of texts
         doc.fillColor('black').font('Helvetica-Oblique')
                 .fontSize(10)
@@ -616,7 +616,7 @@ function dataSharingWithCountryOfOrigin(doc, options) {
         doc.font('Helvetica-Bold').fillColor('#509e2f').fontSize(12);
         doc.text(i18n.__('dataSharingWithCountryOfOrigin') + ' ' + options.countryName, {continued: false, width: 400, align: 'left'});
        let circleY = doc.y + 10;
-        doc.image('assets/green_circle.png', 330, circleY + options.Y_OFFSET, {width: 180});
+        doc.image(__dirname + '/assets/green_circle.png', 330, circleY + options.Y_OFFSET, {width: 180});
 
 doc.font('Helvetica-Bold').fontSize(15).fillColor('black')
         .text(options.countryName, 330, circleY + 30, {width: 180, align: 'center'});
