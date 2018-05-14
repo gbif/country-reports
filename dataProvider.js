@@ -6,6 +6,7 @@ const KINGDOMS = require('./enums').KINGDOMS;
 const SELECTED_TAXONOMIC_GROUPS = require('./enums').SELECTED_TAXONOMIC_GROUPS;
 const API_BASE_URL = require('./config').API_BASE_URL;
 const PORTAL_API_BASE_URL = require('./config').PORTAL_API_BASE_URL;
+const CONTENTFUL_SEARCH_URL = require('./config').CONTENTFUL_SEARCH_URL;
 
 function getPublicationsGlobal( yearsBack, year) {
     let promises = [];
@@ -303,6 +304,65 @@ function getOccurrenceFacetsForCountry(countryCode) {
         });
 }
 
+function getProjectsWithCountryAsPartner(countryCode) {
+        let body = {
+            'query': {
+              'bool': {
+                'should': [
+                  {
+                    'nested': {
+                      'path': 'additionalPartners',
+                      'query': {
+                        'bool': {
+                          'must': [
+                            {
+                              'match': {
+                                'additionalPartners.country': countryCode
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  },
+                  {
+                    'nested': {
+                      'path': 'leadPartner',
+                      'query': {
+                        'bool': {
+                          'must': [
+                            {
+                              'match': {
+                                'leadPartner.country': countryCode
+                              }
+                            }
+                          ]
+                        }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          };
+    return rp({method: 'POST', uri: CONTENTFUL_SEARCH_URL + 'project/_search', body: body, json: true})
+        .then(function(res) {
+            console.log(res);
+                return (res.hits && res.hits.hits && res.hits.hits.length > 0) ? res.hits.hits.map(function(h) {
+                    console.log(h);
+                    return {
+                        _id: h._id,
+                        title: h._source.title['en-GB'],
+                        summary: h._source.summary['en-GB'],
+                        isLead: (h._source.leadPartner && h._source.leadPartner.country === countryCode)
+                    };
+                }) : [];
+        })
+        .catch(function(err) {
+            console.log(err);
+        });
+}
+
 
 module.exports = {
     getPublicationsGlobal: getPublicationsGlobal,
@@ -314,7 +374,8 @@ module.exports = {
     getMostRecentPublishers: getMostRecentPublishers,
     getTopDataContributors: getTopDataContributors,
     getTopDatasets: getTopDatasets,
-    getOccurrenceFacetsForCountry: getOccurrenceFacetsForCountry
+    getOccurrenceFacetsForCountry: getOccurrenceFacetsForCountry,
+    getProjectsWithCountryAsPartner: getProjectsWithCountryAsPartner
 
 }
 ;

@@ -74,6 +74,8 @@
 	"rank": "Rang",
 	"country_": "Land",
 	"noOccs": "Antal observationer",
+	"participatesInTheseProjects" : "deltager i de følgende projekter",	
+	"seeAllGbifProjects" : "Se alle GBIF-projekter",
 	"taxonRank": {
 		"class": "klasse",
 		"superclass": "superklasse",

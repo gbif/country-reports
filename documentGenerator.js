@@ -719,6 +719,42 @@ doc.font('Helvetica-Oblique')
                         .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/about/datasets', {align: 'right', width: 240});
 }
 
+function projectParticipation(doc, options) {
+        if (options.projectsWithCountryAsPartner.length > 0) {
+                doc.font('Helvetica-Bold').fillColor('#509e2f').fontSize(12);
+                doc.text(options.countryName + ' ' + i18n.__('participatesInTheseProjects'), 50, doc.y + 40, {continued: false, width: 400, align: 'left'});
+
+
+                doc.font('Helvetica').fontSize(10);
+                let projects = options.projectsWithCountryAsPartner;
+
+                doc.fillColor('black').text(projects[0].title, 55, doc.y + 20, {indent: -5, width: 450});
+                doc.fontSize(8).text(projects[0].summary, {width: 450});
+                doc.fillColor('blue').text('https://www.gbif.org/project/' + projects[0]._id, {width: 450});
+                doc.moveDown();
+                let textBoxY;
+                for (let i = 1; i < projects.length; i++) {
+                        let w = (i < projects.length - 1) ? 450 : 330;
+                        if (i === projects.length - 1) {
+                                textBoxY = doc.y;
+                        }
+                        doc.fontSize(10).fillColor('black').text(projects[i].title, {indent: -5, width: w});
+                        doc.fontSize(8).text(projects[i].summary, {width: w});
+                        doc.fillColor('blue').text('https://www.gbif.org/project/' + projects[i]._id, {width: w});
+                        if (i < projects.length - 1) {
+                                doc.moveDown();
+                        }
+                }
+                doc.rect(390, textBoxY, 160, 40).fill('#F0FFFF');
+                doc.rect(390, textBoxY, 160, 40).stroke();
+
+                doc.fillColor('black').font('Helvetica-Oblique')
+                        .fontSize(8).text(
+                                i18n.__('seeAllGbifProjects'), 360, textBoxY + 5, {align: 'right', width: 185})
+                                .fillColor('blue').text('https://www.gbif.org/resource/search?contentType=project', {align: 'right', width: 185});
+        }
+}
+
 module.exports = {
         header: header,
         secondaryPageHeader: secondaryPageHeader,
@@ -732,6 +768,7 @@ module.exports = {
         recentDatasets: recentDatasets,
         recentPublishers: recentPublishers,
         dataSharingWithCountryOfOrigin: dataSharingWithCountryOfOrigin,
-        topDataContributors: topDataContributors
+        topDataContributors: topDataContributors,
+        projectParticipation: projectParticipation
 
 };

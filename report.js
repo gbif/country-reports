@@ -22,7 +22,8 @@ function compileReport(countryCode, options, targetStream) {
             ModDate: 'DD/MM/YYYY' // the date the document was last modified
         }
     });
-
+    let isInvolvedInprojects = options.projectsWithCountryAsPartner.length > 0;
+    let totalNumpages = (isInvolvedInprojects) ? 6 : 5;
     doc.pipe(targetStream);
 
     documentGenerator.header(doc, options);
@@ -30,21 +31,26 @@ function compileReport(countryCode, options, targetStream) {
     documentGenerator.datAvailability(doc, options);
     documentGenerator.dataMobilization(doc, options);
     doc.addPage();
-    documentGenerator.secondaryPageHeader(doc, options, 2, 4);
+    documentGenerator.secondaryPageHeader(doc, options, 2, totalNumpages);
     documentGenerator.dataDownloads(doc, options);
     documentGenerator.recentPeerReviewed(doc, options);
     doc.addPage();
-    documentGenerator.secondaryPageHeader(doc, options, 3, 5);
+    documentGenerator.secondaryPageHeader(doc, options, 3, totalNumpages);
     documentGenerator.selectedTaxonomicGroups(doc, options);
     documentGenerator.getChangeOverTime(doc, options);
     doc.addPage();
-    documentGenerator.secondaryPageHeader(doc, options, 4, 5);
+    documentGenerator.secondaryPageHeader(doc, options, 4, totalNumpages);
     documentGenerator.recentDatasets(doc, options);
     documentGenerator.recentPublishers(doc, options);
     doc.addPage();
-    documentGenerator.secondaryPageHeader(doc, options, 5, 5);
+    documentGenerator.secondaryPageHeader(doc, options, 5, totalNumpages);
     documentGenerator.dataSharingWithCountryOfOrigin(doc, options);
     documentGenerator.topDataContributors(doc, options);
+   if (isInvolvedInprojects) {
+    doc.addPage();
+    documentGenerator.secondaryPageHeader(doc, options, 6, totalNumpages);
+    documentGenerator.projectParticipation(doc, options);
+   }
     doc.end();
 }
 
@@ -63,7 +69,8 @@ function runReport(countryCode, locale, year, targetStream) {
         dataProvider.getTopDataContributors(countryCode),
         dataProvider.getTopDatasets(countryCode),
         dataProvider.getOccurrenceFacetsForCountry(countryCode),
-        rp({method: 'GET', uri: ANALYTICS_BASEURL + countryCode + '/publishedBy/figure/occ_repatriation.png', encoding: null})
+        rp({method: 'GET', uri: ANALYTICS_BASEURL + countryCode + '/publishedBy/figure/occ_repatriation.png', encoding: null}),
+        dataProvider.getProjectsWithCountryAsPartner(countryCode)
     ];
 
     Promise.all(promises).then(function(res) {
@@ -86,6 +93,7 @@ function runReport(countryCode, locale, year, targetStream) {
             topDataContributors: res[10],
             topDatasets: res[11],
             occurrenceFacets: res[12],
+            projectsWithCountryAsPartner: res[14],
             countryCode: countryCode,
             locale: locale,
             Y_OFFSET: Y_OFFSET
@@ -96,10 +104,15 @@ function runReport(countryCode, locale, year, targetStream) {
     });
 }
 
+/*
+function getLocales() {
+    return Object.keys(i18n.locales);
+} */
+
 module.exports = {
     runReport: runReport
 };
 
 // Test it:
-//runReport('DK', 'en', 2017, fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + 'DK' + '.pdf'));
+// runReport('BE', 'en', 2017, fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + 'BE' + '.pdf'));
 
