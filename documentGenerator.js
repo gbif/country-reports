@@ -276,7 +276,7 @@ a.lastName;
 }).join(', ') + '.';
                         let result = {txt: authors + ' [' + p.year + '] ' + p.title + '.'};
                         if (p.identifiers && p.identifiers.doi) {
-                                result.doi = 'http://dx.doi.org/' + p.identifiers.doi;
+                                result.doi = 'https://doi.org/' + p.identifiers.doi;
                         }
                         return result;
                 });
@@ -548,7 +548,7 @@ function recentDatasets(doc, options) {
 
                 doc.font('Helvetica').fontSize(10);
                 let datasets = options.mostRecentDatasets.map(function(p) {
-                        return {txt: p.title + '. ' + i18n.__('publishedBy') + ' ' + p._organisationTitle, doi: 'http://dx.doi.org/' + p.doi};
+                        return {txt: p.title + '. ' + i18n.__('publishedBy') + ' ' + p._organisationTitle, doi: 'https://doi.org/' + p.doi};
                 });
                 doc.fillColor('black').text(datasets[0].txt, 55, 135, {indent: -5, width: 450}).fillColor('blue').text(datasets[0].doi).moveDown();
                 let textBoxY;
@@ -687,7 +687,7 @@ doc.font('Helvetica-Oblique')
                 return {
                         txt: p.title + '. ' + p._count.toLocaleString(options.locale) + ' ' + i18n.__('occurrences') + ' '
                              + i18n.__('in') + ' ' + options.countryName + '. (' + i18n.__('lastUpdated') + ' ' + p.machineTags[0].created.split('T')[0] + ') ',
-                        doi: 'http://dx.doi.org/' + p.doi
+                        doi: 'https://doi.org/' + p.doi
                 };
         });
         doc.font('Helvetica').fontSize(10);
