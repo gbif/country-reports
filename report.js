@@ -101,5 +101,5 @@ module.exports = {
 };
 
 // Test it:
-runReport('US', 'da', 2017, fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + 'US' + '.pdf'));
+//runReport('DK', 'en', 2017, fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + 'DK' + '.pdf'));
 
