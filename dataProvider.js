@@ -347,9 +347,7 @@ function getProjectsWithCountryAsPartner(countryCode) {
           };
     return rp({method: 'POST', uri: CONTENTFUL_SEARCH_URL + 'project/_search', body: body, json: true})
         .then(function(res) {
-            console.log(res);
                 return (res.hits && res.hits.hits && res.hits.hits.length > 0) ? res.hits.hits.map(function(h) {
-                    console.log(h);
                     return {
                         _id: h._id,
                         title: h._source.title['en-GB'],
