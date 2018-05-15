@@ -1,6 +1,6 @@
 {
   "name": "gbif-country-reports",
-  "version": "1.3.5",
+  "version": "1.3.6",
   "main": "report.js",
   "repository": {
     "type": "git",

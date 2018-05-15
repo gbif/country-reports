@@ -42,10 +42,11 @@ function accessAndUsage(doc, options) {
 
         doc.font('Helvetica').fontSize(10)
                 .text(i18n.__('researchersFrom'), 260, 280 + options.Y_OFFSET, {width: 180, align: 'center'});
+        let nameY = (options.countryName.length > 16) ? 290 : 300;
         doc.font('Helvetica-Bold').fontSize(15)
-                .text(options.countryName, 330, 300 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.countryName, 330, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Helvetica').fontSize(8)
-                .text(i18n.__('contributedTo'), 330, 320 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(i18n.__('contributedTo'), 330, 323 + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Helvetica-Bold').fontSize(15).fillColor('white')
                 .text(options.countryPublications.reportYear, 330, 337 + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Helvetica').fontSize(8).fillColor('black')
@@ -176,11 +177,11 @@ function dataMobilization(doc, options) {
         doc.image(__dirname + '/assets/green_circle.png', 70, 620 + options.Y_OFFSET, {width: 180});
         doc.fillColor('black').font('Helvetica').fontSize(10)
                 .text(i18n.__('institutionsFrom'), 70, 645 + options.Y_OFFSET, {width: 180, align: 'center'});
-
+        let nameY = (options.countryName.length > 16) ? 656 : 665;
         doc.font('Helvetica-Bold').fontSize(15)
-                .text(options.countryName, 70, 665 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.countryName, 70, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Helvetica').fontSize(8)
-                .text(i18n.__('published'), 70, 685 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(i18n.__('published'), 70, 688 + options.Y_OFFSET, {width: 180, align: 'center'});
 
         doc.font('Helvetica-Bold').fontSize(15).fillColor('white')
                 .text(options.publishedOccRecords.countryOccRecords.toLocaleString(options.locale), 70, 702 + options.Y_OFFSET, {width: 180, align: 'center'});
@@ -221,11 +222,11 @@ function dataDownloads(doc, options) {
         doc.image(__dirname + '/assets/green_circle.png', 70, 170 + options.Y_OFFSET, {width: 180});
         doc.fillColor('black').font('Helvetica').fontSize(10)
                 .text(i18n.__('usersFrom'), 70, 195 + options.Y_OFFSET, {width: 180, align: 'center'});
-
+        let nameY = (options.countryName.length > 16) ? 207 : 215;
         doc.font('Helvetica-Bold').fontSize(15)
-                .text(options.countryName, 70, 215 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.countryName, 70, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Helvetica').fontSize(8)
-                .text(i18n.__('made'), 70, 235 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(i18n.__('made'), 70, 240 + options.Y_OFFSET, {width: 180, align: 'center'});
 
         doc.font('Helvetica-Bold').fontSize(15).fillColor('white')
                 .text(options.accessAndUsageData.countryDownloads, 70, 252 + options.Y_OFFSET, {width: 180, align: 'center'});
@@ -617,9 +618,9 @@ function dataSharingWithCountryOfOrigin(doc, options) {
         doc.text(i18n.__('dataSharingWithCountryOfOrigin') + ' ' + options.countryName, {continued: false, width: 400, align: 'left'});
         let circleY = doc.y + 10;
         doc.image(__dirname + '/assets/green_circle.png', 330, circleY + options.Y_OFFSET, {width: 180});
-
+        let nameY = (options.countryName.length > 16) ? (circleY + 25) : (circleY + 30);
         doc.font('Helvetica-Bold').fontSize(15).fillColor('black')
-                .text(options.countryName, 330, circleY + 30, {width: 180, align: 'center'});
+                .text(options.countryName, 330, nameY, {width: 180, align: 'center'});
         doc.font('Helvetica').fontSize(8)
                 .text(i18n.__('publishesDataFrom'), 330, circleY + 55, {width: 180, align: 'center'});
         doc.font('Helvetica-Bold').fontSize(15).fillColor('white')
@@ -643,7 +644,7 @@ function dataSharingWithCountryOfOrigin(doc, options) {
                 .text(i18n.__('figure') + ' 6. ' + i18n.__('dataSharingWithCountryOfOriginFigureText'), 85, doc.y + 5, {width: '200', align: 'center'});
 
 
-        doc.rect(50, 340, 500, 40)
+        doc.rect(50, 345, 500, 40)
                 .fill('#D3D3D3');
         doc.fillColor('black').font('Helvetica').fontSize(8).text(
                 i18n.__('numRecordsSharedOverTime'),
