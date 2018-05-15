@@ -269,11 +269,11 @@ function recentPeerReviewed(doc, options) {
                 let publications = options.countryPublications.latest.map(function(p) {
                         let authors = (p.authors.length > 3) ?
                                 p.authors.slice(0, 3).map(function(a) {
-return a.lastName;
-}).join(', ') + ' et al.' :
+                                        return a.lastName;
+                                }).join(', ') + ' et al.' :
                                 p.authors.map(function(a) {
-a.lastName;
-}).join(', ') + '.';
+                                        a.lastName;
+                                }).join(', ') + '.';
                         let result = {txt: authors + ' [' + p.year + '] ' + p.title + '.'};
                         if (p.identifiers && p.identifiers.doi) {
                                 result.doi = 'https://doi.org/' + p.identifiers.doi;
@@ -281,7 +281,7 @@ a.lastName;
                         return result;
                 });
                 doc.fillColor('black').text(publications[0].txt, 55, 520, {indent: -5, width: 450}).fillColor('blue').text(publications[0].doi).moveDown();
-                let textBoxY;
+                let textBoxY = doc.y;
                 for (let i = 1; i < publications.length; i++) {
                         let w = (i < publications.length - 1) ? 450 : 330;
                         if (i === publications.length - 1) {
@@ -298,7 +298,7 @@ a.lastName;
                 doc.fillColor('black').font('Helvetica-Oblique')
                         .fontSize(8).text(
                                 i18n.__('seeAllResearchFromThisCountry'), 360, textBoxY + 5, {align: 'right', width: 185})
-                                .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/publications', {align: 'right', width: 185});
+                        .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/publications', {align: 'right', width: 185});
         }
 }
 
@@ -551,7 +551,7 @@ function recentDatasets(doc, options) {
                         return {txt: p.title + '. ' + i18n.__('publishedBy') + ' ' + p._organisationTitle, doi: 'https://doi.org/' + p.doi};
                 });
                 doc.fillColor('black').text(datasets[0].txt, 55, 135, {indent: -5, width: 450}).fillColor('blue').text(datasets[0].doi).moveDown();
-                let textBoxY;
+                let textBoxY = doc.y;
                 for (let i = 1; i < datasets.length; i++) {
                         let w = (i < datasets.length - 1) ? 450 : 330;
                         if (i === datasets.length - 1) {
@@ -568,7 +568,7 @@ function recentDatasets(doc, options) {
                 doc.fillColor('black').font('Helvetica-Oblique')
                         .fontSize(8).text(
                                 i18n.__('seeAllDatsetsFromThisCountry'), 360, textBoxY + 5, {align: 'right', width: 185})
-                                .fillColor('blue').text('https://www.gbif.org/dataset/search?publishingCountry=' + options.countryCode + '/publications', {align: 'right', width: 185});
+                        .fillColor('blue').text('https://www.gbif.org/dataset/search?publishingCountry=' + options.countryCode + '/publications', {align: 'right', width: 185});
 
                 let y = doc.y + 20;
                 doc.moveTo(50, y)
@@ -590,7 +590,7 @@ function recentPublishers(doc, options) {
                         return {txt: p.title};
                 });
                 doc.fillColor('black').text(publishers[0].txt, 55, doc.y + 20, {indent: -5, width: 450}).moveDown();
-                let textBoxY;
+                let textBoxY = doc.y;
                 for (let i = 1; i < publishers.length; i++) {
                         let w = (i < publishers.length - 1) ? 450 : 330;
                         if (i === publishers.length - 1) {
@@ -607,7 +607,7 @@ function recentPublishers(doc, options) {
                 doc.fillColor('black').font('Helvetica-Oblique')
                         .fontSize(8).text(
                                 i18n.__('seeAllPublishersFromThisCountry'), 360, textBoxY + 5, {align: 'right', width: 185})
-                                .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/publishers', {align: 'right', width: 185});
+                        .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/publishers', {align: 'right', width: 185});
         }
 }
 
@@ -615,32 +615,32 @@ function dataSharingWithCountryOfOrigin(doc, options) {
         doc.font('Helvetica-Bold').fillColor('black').fontSize(12).text(i18n.__('dataMobilization'), 50, 115);
         doc.font('Helvetica-Bold').fillColor('#509e2f').fontSize(12);
         doc.text(i18n.__('dataSharingWithCountryOfOrigin') + ' ' + options.countryName, {continued: false, width: 400, align: 'left'});
-       let circleY = doc.y + 10;
+        let circleY = doc.y + 10;
         doc.image(__dirname + '/assets/green_circle.png', 330, circleY + options.Y_OFFSET, {width: 180});
 
-doc.font('Helvetica-Bold').fontSize(15).fillColor('black')
-        .text(options.countryName, 330, circleY + 30, {width: 180, align: 'center'});
-doc.font('Helvetica').fontSize(8)
-        .text(i18n.__('publishesDataFrom'), 330, circleY + 55, {width: 180, align: 'center'});
-doc.font('Helvetica-Bold').fontSize(15).fillColor('white')
-        .text(options.occurrenceFacets.COUNTRY.toLocaleString(options.locale), 330, circleY + 65, {width: 180, align: 'center'});
-doc.font('Helvetica').fontSize(8).fillColor('black')
-        .text(i18n.__('countriesTerritoriesAndislands'), 340, circleY + 80, {width: 160, align: 'center'});
-doc.font('Helvetica').fontSize(8).fillColor('black')
-        .text(i18n.__('including'), {width: 160, align: 'center'});
-doc.font('Helvetica-Bold').fontSize(15).fillColor('white')
-        .text(options.occurrenceFacets.count.toLocaleString(options.locale), 330, circleY + 100, {width: 180, align: 'center'});
-doc.font('Helvetica').fontSize(8).fillColor('black')
-        .text(i18n.__('occurrences') + ' ' + i18n.__('in'), 330, circleY + 115, {width: 180, align: 'center'});
-doc.font('Helvetica-Bold').fontSize(15).fillColor('white')
-        .text(options.occurrenceFacets.DATASET_KEY.toLocaleString(options.locale), 330, circleY + 130, {width: 180, align: 'center'});
- doc.font('Helvetica').fontSize(8).fillColor('black')
-        .text(i18n.__('occurrenceDatasets'), 330, circleY + 145, {width: 180, align: 'center'});
+        doc.font('Helvetica-Bold').fontSize(15).fillColor('black')
+                .text(options.countryName, 330, circleY + 30, {width: 180, align: 'center'});
+        doc.font('Helvetica').fontSize(8)
+                .text(i18n.__('publishesDataFrom'), 330, circleY + 55, {width: 180, align: 'center'});
+        doc.font('Helvetica-Bold').fontSize(15).fillColor('white')
+                .text(options.occurrenceFacets.COUNTRY.toLocaleString(options.locale), 330, circleY + 65, {width: 180, align: 'center'});
+        doc.font('Helvetica').fontSize(8).fillColor('black')
+                .text(i18n.__('countriesTerritoriesAndislands'), 340, circleY + 80, {width: 160, align: 'center'});
+        doc.font('Helvetica').fontSize(8).fillColor('black')
+                .text(i18n.__('including'), {width: 160, align: 'center'});
+        doc.font('Helvetica-Bold').fontSize(15).fillColor('white')
+                .text(options.occurrenceFacets.count.toLocaleString(options.locale), 330, circleY + 100, {width: 180, align: 'center'});
+        doc.font('Helvetica').fontSize(8).fillColor('black')
+                .text(i18n.__('occurrences') + ' ' + i18n.__('in'), 330, circleY + 115, {width: 180, align: 'center'});
+        doc.font('Helvetica-Bold').fontSize(15).fillColor('white')
+                .text(options.occurrenceFacets.DATASET_KEY.toLocaleString(options.locale), 330, circleY + 130, {width: 180, align: 'center'});
+        doc.font('Helvetica').fontSize(8).fillColor('black')
+                .text(i18n.__('occurrenceDatasets'), 330, circleY + 145, {width: 180, align: 'center'});
 
-doc.image(options.occRepatriation, 50, circleY, {width: 270, height: 140});
-doc.font('Helvetica-Oblique')
-.fontSize(8)
-.text(i18n.__('figure') + ' 6. ' + i18n.__('dataSharingWithCountryOfOriginFigureText'), 85, doc.y + 5, {width: '200', align: 'center'});
+        doc.image(options.occRepatriation, 50, circleY, {width: 270, height: 140});
+        doc.font('Helvetica-Oblique')
+                .fontSize(8)
+                .text(i18n.__('figure') + ' 6. ' + i18n.__('dataSharingWithCountryOfOriginFigureText'), 85, doc.y + 5, {width: '200', align: 'center'});
 
 
         doc.rect(50, 340, 500, 40)
@@ -673,11 +673,11 @@ function topDataContributors(doc, options) {
         };
         let bodyY = doc.y + 5;
         doc.moveDown().table(table1, 50, bodyY, {width: 245});
-// rankingOfCountriesContributing
+        // rankingOfCountriesContributing
 
-doc.font('Helvetica-Oblique')
-.fontSize(8)
-.text(i18n.__('table') + ' 1. ' + i18n.__('rankingOfCountriesContributing') + ' ' + options.countryName, 75, doc.y + 5, {width: '200', align: 'center'});
+        doc.font('Helvetica-Oblique')
+                .fontSize(8)
+                .text(i18n.__('table') + ' 1. ' + i18n.__('rankingOfCountriesContributing') + ' ' + options.countryName, 75, doc.y + 5, {width: '200', align: 'center'});
         let column1bottomY = doc.y;
         // Second column
         doc.font('Helvetica-Bold').fillColor('#509e2f').fontSize(12);
@@ -686,7 +686,7 @@ doc.font('Helvetica-Oblique')
         let datasets = options.topDatasets.map(function(p) {
                 return {
                         txt: p.title + '. ' + p._count.toLocaleString(options.locale) + ' ' + i18n.__('occurrences') + ' '
-                             + i18n.__('in') + ' ' + options.countryName + '. (' + i18n.__('lastUpdated') + ' ' + p.machineTags[0].created.split('T')[0] + ') ',
+                                + i18n.__('in') + ' ' + options.countryName + '. (' + i18n.__('lastUpdated') + ' ' + p.machineTags[0].created.split('T')[0] + ') ',
                         doi: 'https://doi.org/' + p.doi
                 };
         });
@@ -708,7 +708,7 @@ doc.font('Helvetica-Oblique')
         doc.fillColor('black').font('Helvetica-Oblique')
                 .fontSize(8).text(
                         i18n.__('seeAllContributingCountries'), 50, textBoxY + 5, {align: 'right', width: 240})
-                        .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/about/countries', {align: 'right', width: 240});
+                .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/about/countries', {align: 'right', width: 240});
 
         doc.rect(305, textBoxY, 245, 40).fill('#F0FFFF');
         doc.rect(305, textBoxY, 245, 40).strokeColor('#509e2f').stroke();
@@ -716,11 +716,11 @@ doc.font('Helvetica-Oblique')
         doc.fillColor('black').font('Helvetica-Oblique')
                 .fontSize(8).text(
                         i18n.__('seeAllContributingDatasets'), 305, textBoxY + 5, {align: 'right', width: 240})
-                        .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/about/datasets', {align: 'right', width: 240});
+                .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/about/datasets', {align: 'right', width: 240});
 }
 
 function projectParticipation(doc, options) {
-        if (options.projectsWithCountryAsPartner.length > 0) {
+        if (options.projectsWithCountryAsPartner && options.projectsWithCountryAsPartner.length > 0) {
                 doc.font('Helvetica-Bold').fillColor('#509e2f').fontSize(12);
                 doc.text(options.countryName + ' ' + i18n.__('participatesInTheseProjects'), 50, doc.y + 40, {continued: false, width: 400, align: 'left'});
 
@@ -732,7 +732,7 @@ function projectParticipation(doc, options) {
                 doc.fontSize(8).text(projects[0].summary, {width: 450});
                 doc.fillColor('blue').text('https://www.gbif.org/project/' + projects[0]._id, {width: 450});
                 doc.moveDown();
-                let textBoxY;
+                let textBoxY = doc.y;
                 for (let i = 1; i < projects.length; i++) {
                         let w = (i < projects.length - 1) ? 450 : 330;
                         if (i === projects.length - 1) {
@@ -751,7 +751,7 @@ function projectParticipation(doc, options) {
                 doc.fillColor('black').font('Helvetica-Oblique')
                         .fontSize(8).text(
                                 i18n.__('seeAllGbifProjects'), 360, textBoxY + 5, {align: 'right', width: 185})
-                                .fillColor('blue').text('https://www.gbif.org/resource/search?contentType=project', {align: 'right', width: 185});
+                        .fillColor('blue').text('https://www.gbif.org/resource/search?contentType=project', {align: 'right', width: 185});
         }
 }
 

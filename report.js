@@ -104,6 +104,7 @@ function runReport(options) {
         };
             compileReport(countryCode, reportOptions, targetStream);
     }).catch(function(err) {
+        console.log(err)
         throw err;
     });
 }
@@ -117,14 +118,4 @@ module.exports = {
     runReport: runReport
 };
 
-// Test it:
-/*
-const fs = require('fs');
-runReport({
-    countryCode: 'BE',
-    locale: 'en',
-    year: 2017,
-    targetStream: fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + 'BE' + '.pdf')
-});
-*/
 
