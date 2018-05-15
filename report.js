@@ -55,7 +55,7 @@ function compileReport(countryCode, options, targetStream) {
 function runReport(options) {
     let countryCode = options.countryCode;
     let locale = options.locale;
-    let year = options.year;
+    let year = options.year || (new Date().getFullYear() - 1);
     let targetStream = options.targetStream;
 
     let promises = [
