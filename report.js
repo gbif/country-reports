@@ -1,6 +1,5 @@
 const PDFDocument = require('./pdfkitwithtables');
 const rp = require('request-promise');
-const i18n = require('./i18n');
 const documentGenerator = require('./documentGenerator');
 const dataProvider = require('./dataProvider');
 const mockdata = require('./mockDataProvider');
@@ -78,6 +77,7 @@ function runReport(options) {
     ];
 
     Promise.all(promises).then(function(res) {
+        let i18n = require('./i18n')();
         i18n.setLocale(locale);
         let reportOptions = {year: year,
             globalPublicationsChart: new Buffer(res[0], 'base64'),
@@ -100,11 +100,12 @@ function runReport(options) {
             projectsWithCountryAsPartner: res[14],
             countryCode: countryCode,
             locale: locale,
+            i18n: i18n,
             Y_OFFSET: Y_OFFSET
         };
             compileReport(countryCode, reportOptions, targetStream);
     }).catch(function(err) {
-        console.log(err)
+        console.log(err);
         throw err;
     });
 }

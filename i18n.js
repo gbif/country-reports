@@ -1,8 +1,10 @@
-let translator = new (require('i18n-2'))({
+function i18n() {
+   return new (require('i18n-2'))({
     locales: ['en', 'da'],
     directory: __dirname + '/locales',
     extension: '.json',
     objectNotation: true
 });
+}
 
-module.exports = translator;
+module.exports = i18n;

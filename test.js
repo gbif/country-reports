@@ -9,7 +9,7 @@ reportRunner.runReport({
 
 reportRunner.runReport({
     countryCode: 'DK',
-    locale: 'en',
+    locale: 'da',
     year: 2017,
     targetStream: fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + 'DK' + '.pdf')
 });
