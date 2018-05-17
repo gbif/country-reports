@@ -1,11 +1,10 @@
-const mockdata = require('./mockDataProvider');
 const HIGHCHARTS_SERVER_URL = require('./config').HIGHCHARTS_SERVER_URL;
 const _ = require('lodash');
 const rp = require('request-promise');
 const csv = require('fast-csv');
-const fs = require('fs');
 const eventToPromise = require('event-to-promise');
 const elasticQueryTemplates = require('./elasticQueryTemplates');
+const moment = require('moment');
 const KINGDOMS = require('./enums').KINGDOMS;
 const SELECTED_TAXONOMIC_GROUPS = require('./enums').SELECTED_TAXONOMIC_GROUPS;
 const API_BASE_URL = require('./config').API_BASE_URL;
@@ -98,7 +97,9 @@ function getPublicationsGlobal(yearsBack, year) {
     });
 }
 
-function occDownloadsByMonth(country, year) {
+async function occDownloadsByMonth(country, year) {
+    let data = await getAccessAndUsageData(year, country);
+
     let options = {
         chart: {
             type: 'line'
@@ -112,7 +113,7 @@ function occDownloadsByMonth(country, year) {
                     'font': '20px Helvetica, Verdana, sans-serif'
                 }
             },
-            'categories': mockdata.getAccessAndUsageData(year).occRecordByMonth.categories
+            'categories': data.occRecordByMonth.categories
         },
         yAxis: {
             'labels': {
@@ -133,7 +134,7 @@ function occDownloadsByMonth(country, year) {
             }
         },
         series: [{
-            data: mockdata.getAccessAndUsageData(year).occRecordByMonth.data
+            data: data.occRecordByMonth.data
         }],
         credits: {
             enabled: false
@@ -143,7 +144,7 @@ function occDownloadsByMonth(country, year) {
         }
     };
 
-    return rp({
+ let res = await rp({
         method: 'POST', uri: HIGHCHARTS_SERVER_URL, body: {
             options: options,
             type: 'png',
@@ -151,12 +152,8 @@ function occDownloadsByMonth(country, year) {
             b64: true
         },
         json: true
-    })
-        .then(function(res) {
-            return res;
-        }).catch(function(err) {
-            console.log(err);
-        });
+    });
+   return res;
 }
 
 function getSelectedCountryPublications(countryCode, year) {
@@ -385,6 +382,42 @@ async function getPublishedOccRecords(year, countryCode) {
     };
 }
 
+async function getAccessAndUsageData(year, countryCode) {
+    let twoYearsAgo = moment().subtract(2, 'years').format('YYYY-MM');
+    let lastYear = moment().subtract(1, 'years').format('YYYY');
+    let countryDownloadsData = await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/monthlystats?country=' + countryCode.toLowerCase() + '&fromDate=' + twoYearsAgo, json: true} );
+    let totalDownloadsData = await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/monthlystats?&fromDate=' + twoYearsAgo, json: true} );
+    let countryDownloads = 0;
+    let totalDownloads = 0;
+    _.each(countryDownloadsData[lastYear], function(v) {
+        countryDownloads += parseInt(v);
+    });
+    _.each(totalDownloadsData[lastYear], function(v) {
+        totalDownloads += parseInt(v);
+    });
+
+    let res = {
+        countryDownloads: countryDownloads,
+        totalDownloads: totalDownloads,
+        occRecordByMonth: {
+            categories: [],
+            data: []
+        }
+    };
+    for (let i = 1; i < 13; i++) {
+        let cat = moment().subtract(i, 'months').format('YYYY-MM');
+        res.occRecordByMonth.categories.push(cat);
+        let count = 0;
+        let parts = cat.split('-');
+        let y = parseInt(parts[0]);
+        let m = parseInt(parts[1]);
+        if (countryDownloadsData[y] && countryDownloadsData[y][m]) {
+            count = countryDownloadsData[y][m];
+        }
+        res.occRecordByMonth.data.push(count);
+    }
+    return res;
+}
 
 module.exports = {
     getPublicationsGlobal: getPublicationsGlobal,
@@ -398,7 +431,8 @@ module.exports = {
     getTopDatasets: getTopDatasets,
     getOccurrenceFacetsForCountry: getOccurrenceFacetsForCountry,
     getProjectsWithCountryAsPartner: getProjectsWithCountryAsPartner,
-    getPublishedOccRecords: getPublishedOccRecords
+    getPublishedOccRecords: getPublishedOccRecords,
+    getAccessAndUsageData: getAccessAndUsageData
 
 }
     ;

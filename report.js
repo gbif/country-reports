@@ -2,7 +2,6 @@ const PDFDocument = require('./pdfkitwithtables');
 const rp = require('request-promise');
 const documentGenerator = require('./documentGenerator');
 const dataProvider = require('./dataProvider');
-const mockdata = require('./mockDataProvider');
 const ANALYTICS_COUNTRY_BASEURL = require('./config').ANALYTICS_COUNTRY_BASEURL;
 const Y_OFFSET = -5; // used for adjusting entire page Y
 
@@ -74,7 +73,8 @@ function runReport(options) {
         dataProvider.getOccurrenceFacetsForCountry(countryCode),
         rp({method: 'GET', uri: ANALYTICS_COUNTRY_BASEURL + countryCode + '/publishedBy/figure/occ_repatriation.png', encoding: null}),
         dataProvider.getProjectsWithCountryAsPartner(countryCode),
-        dataProvider.getPublishedOccRecords(year, countryCode)
+        dataProvider.getPublishedOccRecords(year, countryCode),
+        dataProvider.getAccessAndUsageData(year, countryCode)
     ];
 
     Promise.all(promises).then(function(res) {
@@ -89,7 +89,7 @@ function runReport(options) {
             occByKingdomChartPublishedBy: new Buffer(res[4], 'base64'),
             occDownloadsByMonthChart: new Buffer(res[5], 'base64'),
             occRepatriation: new Buffer(res[13], 'base64'),
-            accessAndUsageData: mockdata.getAccessAndUsageData(year),
+            accessAndUsageData: res[16],
             countryName: i18n.__('country.' + countryCode.toUpperCase()),
             publishedOccRecords: res[15],
             countsForSelectedtaxonomicGroups: res[6],
