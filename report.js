@@ -3,7 +3,7 @@ const rp = require('request-promise');
 const documentGenerator = require('./documentGenerator');
 const dataProvider = require('./dataProvider');
 const mockdata = require('./mockDataProvider');
-const ANALYTICS_BASEURL = require('./config').ANALYTICS_BASEURL;
+const ANALYTICS_COUNTRY_BASEURL = require('./config').ANALYTICS_COUNTRY_BASEURL;
 const Y_OFFSET = -5; // used for adjusting entire page Y
 
 function compileReport(countryCode, options, targetStream) {
@@ -62,18 +62,19 @@ function runReport(options) {
         dataProvider.getPublicationsGlobal(8, year),
         dataProvider.getSelectedCountryPublications(countryCode, year),
         dataProvider.getCountryOccurencesByKingdom(countryCode, year),
-        rp({method: 'GET', uri: ANALYTICS_BASEURL + countryCode + '/about/figure/occ_kingdom.png', encoding: null}),
-        rp({method: 'GET', uri: ANALYTICS_BASEURL + countryCode + '/publishedBy/figure/occ_kingdom.png', encoding: null}),
+        rp({method: 'GET', uri: ANALYTICS_COUNTRY_BASEURL + countryCode + '/about/figure/occ_kingdom.png', encoding: null}),
+        rp({method: 'GET', uri: ANALYTICS_COUNTRY_BASEURL + countryCode + '/publishedBy/figure/occ_kingdom.png', encoding: null}),
         dataProvider.occDownloadsByMonth(countryCode, year),
         dataProvider.getCountsForSelectedtaxonomicGroups(countryCode.toUpperCase()),
-        rp({method: 'GET', uri: ANALYTICS_BASEURL + countryCode + '/about/figure/spe_kingdom.png', encoding: null}),
+        rp({method: 'GET', uri: ANALYTICS_COUNTRY_BASEURL + countryCode + '/about/figure/spe_kingdom.png', encoding: null}),
         dataProvider.getMostRecentDatasets(countryCode),
         dataProvider.getMostRecentPublishers(countryCode),
         dataProvider.getTopDataContributors(countryCode),
         dataProvider.getTopDatasets(countryCode),
         dataProvider.getOccurrenceFacetsForCountry(countryCode),
-        rp({method: 'GET', uri: ANALYTICS_BASEURL + countryCode + '/publishedBy/figure/occ_repatriation.png', encoding: null}),
-        dataProvider.getProjectsWithCountryAsPartner(countryCode)
+        rp({method: 'GET', uri: ANALYTICS_COUNTRY_BASEURL + countryCode + '/publishedBy/figure/occ_repatriation.png', encoding: null}),
+        dataProvider.getProjectsWithCountryAsPartner(countryCode),
+        dataProvider.getPublishedOccRecords(year, countryCode)
     ];
 
     Promise.all(promises).then(function(res) {
@@ -90,7 +91,7 @@ function runReport(options) {
             occRepatriation: new Buffer(res[13], 'base64'),
             accessAndUsageData: mockdata.getAccessAndUsageData(year),
             countryName: i18n.__('country.' + countryCode.toUpperCase()),
-            publishedOccRecords: mockdata.getPublishedOccRecords(year),
+            publishedOccRecords: res[15],
             countsForSelectedtaxonomicGroups: res[6],
             mostRecentDatasets: res[8],
             mostRecentPublishers: res[9],

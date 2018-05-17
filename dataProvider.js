@@ -2,11 +2,17 @@ const mockdata = require('./mockDataProvider');
 const HIGHCHARTS_SERVER_URL = require('./config').HIGHCHARTS_SERVER_URL;
 const _ = require('lodash');
 const rp = require('request-promise');
+const csv = require('fast-csv');
+const fs = require('fs');
+const eventToPromise = require('event-to-promise');
 const elasticQueryTemplates = require('./elasticQueryTemplates');
 const KINGDOMS = require('./enums').KINGDOMS;
 const SELECTED_TAXONOMIC_GROUPS = require('./enums').SELECTED_TAXONOMIC_GROUPS;
 const API_BASE_URL = require('./config').API_BASE_URL;
 const CONTENTFUL_SEARCH_URL = require('./config').CONTENTFUL_SEARCH_URL;
+const ANALYTICS_COUNTRY_BASEURL = require('./config').ANALYTICS_COUNTRY_BASEURL;
+const ANALYTICS_GLOBAL_BASEURL = require('./config').ANALYTICS_GLOBAL_BASEURL;
+
 
 function getPublicationsGlobal(yearsBack, year) {
     let promises = [];
@@ -328,6 +334,57 @@ function getProjectsWithCountryAsPartner(countryCode) {
         });
 }
 
+async function annualDataGrowth(year, countryCode) {
+    let uri = (countryCode) ? ANALYTICS_COUNTRY_BASEURL + countryCode + '/publishedBy/csv/occ_kingdom_basisOfRecord.csv' : ANALYTICS_GLOBAL_BASEURL + '/csv/occ_kingdom_basisOfRecord.csv';
+    let csvfile = await rp({method: 'GET', uri: uri});
+    let occSnapshotCountMap = {};
+    let years = {};
+
+    let emitter = csv
+        .fromString(csvfile)
+
+        .on('data', function(data) {
+            let snapshotName = data[0].substring(0, 7); // year-month
+            if (occSnapshotCountMap[snapshotName]) {
+                occSnapshotCountMap[snapshotName] += parseInt(data[3]);
+            } else {
+                occSnapshotCountMap[snapshotName] = parseInt(data[3]);
+            }
+        });
+
+    await eventToPromise(emitter, 'end');
+
+    delete occSnapshotCountMap.snapshot; // get rid of the header
+    let snapshots = Object.keys(occSnapshotCountMap);
+
+
+    for (let i = 0; i < snapshots.length; i++) {
+        let y = snapshots[i].split('-')[0];
+        years[y] = false;
+    }
+    _.each(years, function(v, k) {
+        if (occSnapshotCountMap[k + '-12']) {
+            years[k] = occSnapshotCountMap[k + '-12']; // there was a december snapshot
+        } else if (occSnapshotCountMap[(parseInt(k) + 1) + '-01']) {
+            years[k] = occSnapshotCountMap[(parseInt(k) + 1) + '-01']; // No december snapshot, but from january next year
+        }
+    });
+    if (years[year] && years[parseInt(year) - 1]) {
+        return years[year] - years[parseInt(year) - 1];
+    } else {
+        throw new Error('Not possible to calculate data growth');
+    }
+}
+
+async function getPublishedOccRecords(year, countryCode) {
+    let countryOccRecords = await annualDataGrowth(year, countryCode);
+    let globalOccRecords = await annualDataGrowth(year);
+     return {
+        countryOccRecords: countryOccRecords,
+        globalOccRecords: globalOccRecords
+    };
+}
+
 
 module.exports = {
     getPublicationsGlobal: getPublicationsGlobal,
@@ -340,7 +397,8 @@ module.exports = {
     getTopDataContributors: getTopDataContributors,
     getTopDatasets: getTopDatasets,
     getOccurrenceFacetsForCountry: getOccurrenceFacetsForCountry,
-    getProjectsWithCountryAsPartner: getProjectsWithCountryAsPartner
+    getProjectsWithCountryAsPartner: getProjectsWithCountryAsPartner,
+    getPublishedOccRecords: getPublishedOccRecords
 
 }
     ;
