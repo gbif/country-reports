@@ -4,6 +4,8 @@
 	"twelveMonthReport": "12-måneders rapport",
 	"generated": "genereret",
 	"figure": "Figur",
+	"monthlyDownloadsByUsersInCountry": "Antal downloads pr måned foretaget af brugere i",
+	"occDowloadedFromGBIFpublishedByInstitutionsInCountry": "Observations-records downloaded fra GBIF.org, publiceret af institutioner i",
 	"numPeerReviedPublicationsCitingGBIF": "Antal peer-reviewede publikationer, som citerer brug af global GBIF-medieret data",
 	"accessAndUsage": "Adgang og brug",
 	"dataDownloadsFromUsersIn": "Data downloads på GBIF.org fra brugere i",
@@ -340,6 +342,6 @@
 		"ZZ": "Unknown country"
 	},
 	"observationer": "observationer",
-	"published": "published",
+	"published": "publiceret",
 	"publishedBy": "publishedBy"
 }

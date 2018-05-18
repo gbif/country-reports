@@ -63,7 +63,7 @@ function runReport(options) {
         dataProvider.getCountryOccurencesByKingdom(countryCode, year),
         rp({method: 'GET', uri: ANALYTICS_COUNTRY_BASEURL + countryCode + '/about/figure/occ_kingdom.png', encoding: null}),
         rp({method: 'GET', uri: ANALYTICS_COUNTRY_BASEURL + countryCode + '/publishedBy/figure/occ_kingdom.png', encoding: null}),
-        dataProvider.occDownloadsByMonth(countryCode, year),
+        dataProvider.getDownloadsByMonth(countryCode, year),
         dataProvider.getCountsForSelectedtaxonomicGroups(countryCode.toUpperCase()),
         rp({method: 'GET', uri: ANALYTICS_COUNTRY_BASEURL + countryCode + '/about/figure/spe_kingdom.png', encoding: null}),
         dataProvider.getMostRecentDatasets(countryCode),
@@ -74,7 +74,8 @@ function runReport(options) {
         rp({method: 'GET', uri: ANALYTICS_COUNTRY_BASEURL + countryCode + '/publishedBy/figure/occ_repatriation.png', encoding: null}),
         dataProvider.getProjectsWithCountryAsPartner(countryCode),
         dataProvider.getPublishedOccRecords(year, countryCode),
-        dataProvider.getAccessAndUsageData(year, countryCode)
+        dataProvider.getAccessAndUsageData(year, countryCode),
+        dataProvider.getRecordsPublishedByCountryDownloadedByMonth(countryCode, year)
     ];
 
     Promise.all(promises).then(function(res) {
@@ -87,7 +88,7 @@ function runReport(options) {
             occByKingdomChartAbout: new Buffer(res[3], 'base64'),
             speciesByKingdomChartAbout: new Buffer(res[7], 'base64'),
             occByKingdomChartPublishedBy: new Buffer(res[4], 'base64'),
-            occDownloadsByMonthChart: new Buffer(res[5], 'base64'),
+            downloadsByMonthChart: new Buffer(res[5], 'base64'),
             occRepatriation: new Buffer(res[13], 'base64'),
             accessAndUsageData: res[16],
             countryName: i18n.__('country.' + countryCode.toUpperCase()),
@@ -99,6 +100,7 @@ function runReport(options) {
             topDatasets: res[11],
             occurrenceFacets: res[12],
             projectsWithCountryAsPartner: res[14],
+            recordsPublishedByCountryDownloadedByMonth: new Buffer(res[17], 'base64'),
             countryCode: countryCode,
             locale: locale,
             i18n: i18n,

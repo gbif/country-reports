@@ -206,7 +206,7 @@ function dataMobilization(doc, options) {
 function secondaryPageHeader(doc, options, pageNumber, totalPages) {
         doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 50, 50 + options.Y_OFFSET, {width: 30});
         doc.image(__dirname + '/assets/green_bar.png', 110, 52 + options.Y_OFFSET, {height: 20, width: 440});
-        doc.text(pageNumber + ' | ' + totalPages, 530, 82 + options.Y_OFFSET);
+        doc.fillColor('black').font('Helvetica').fontSize(9).text(pageNumber + ' | ' + totalPages, 530, 82 + options.Y_OFFSET);
         doc.moveTo(50, 100 + options.Y_OFFSET)
                 .lineTo(550, 100 + options.Y_OFFSET)
                 .lineWidth(2)
@@ -240,10 +240,10 @@ function dataDownloads(doc, options) {
         doc.font('Helvetica').fontSize(8).fillColor('black')
                 .text(options.i18n.__('ofAllDownloads', options.year), 100, 310 + options.Y_OFFSET, {width: 120, align: 'center'});
 
-        doc.image(options.occDownloadsByMonthChart, 300, 190 + options.Y_OFFSET, {width: 250, height: 150});
+        doc.image(options.downloadsByMonthChart, 300, 190 + options.Y_OFFSET, {width: 250, height: 150});
         doc.font('Helvetica-Oblique')
                 .fontSize(8)
-                .text(options.i18n.__('figure') + ' 4. ' + options.i18n.__('numOccDownloadsByOrgsIn') + ' ' + options.countryName, 300, 340 + options.Y_OFFSET, {width: 250, align: 'center'});
+                .text(options.i18n.__('figure') + ' 3. ' + options.i18n.__('monthlyDownloadsByUsersInCountry') + ' ' + options.countryName, 300, 340 + options.Y_OFFSET, {width: 250, align: 'center'});
 
         doc.moveTo(50, 390 + options.Y_OFFSET)
                 .lineTo(550, 390 + options.Y_OFFSET)
@@ -284,7 +284,7 @@ function recentPeerReviewed(doc, options) {
                 doc.fillColor('black').text(publications[0].txt, 55, 520, {indent: -5, width: 450}).fillColor('blue').text(publications[0].doi).moveDown();
                 let textBoxY = doc.y;
                 for (let i = 1; i < publications.length; i++) {
-                        let w = (i < publications.length - 1) ? 450 : 330;
+                        let w = (i < publications.length - 1) ? 450 : 325;
                         if (i === publications.length - 1) {
                                 textBoxY = doc.y;
                         }
@@ -293,13 +293,13 @@ function recentPeerReviewed(doc, options) {
                                 doc.moveDown();
                         }
                 }
-                doc.rect(390, textBoxY, 160, 40).fill('#F0FFFF');
-                doc.rect(390, textBoxY, 160, 40).stroke();
+                doc.rect(385, textBoxY, 165, 40).fill('#F0FFFF');
+                doc.rect(385, textBoxY, 165, 40).stroke();
 
                 doc.fillColor('black').font('Helvetica-Oblique')
                         .fontSize(8).text(
-                                options.i18n.__('seeAllResearchFromThisCountry'), 360, textBoxY + 5, {align: 'right', width: 185})
-                        .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/publications', {align: 'right', width: 185});
+                                options.i18n.__('seeAllResearchFromThisCountry'), 385, textBoxY + 5, {align: 'right', width: 160})
+                        .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/publications', {align: 'right', width: 160});
         }
 }
 
@@ -515,13 +515,13 @@ function getChangeOverTime(doc, options) {
         doc.image(options.occByKingdomChartAbout, 50, 575, {width: 250, height: 130});
         doc.fillColor('black').font('Helvetica-Oblique')
                 .fontSize(8)
-                .text(options.i18n.__('figure') + ' 5. ' + options.i18n.__('occRecordsAvailableFigText') + ' ' + options.countryName, 83, 713 + options.Y_OFFSET, {width: 200, align: 'center'});
+                .text(options.i18n.__('figure') + ' 4. ' + options.i18n.__('occRecordsAvailableFigText') + ' ' + options.countryName, 83, 713 + options.Y_OFFSET, {width: 200, align: 'center'});
 
         doc.image(options.speciesByKingdomChartAbout, 300, 575, {width: 250, height: 130});
 
         doc.fillColor('black').font('Helvetica-Oblique')
                 .fontSize(8)
-                .text(options.i18n.__('figure') + ' 6. ' + options.i18n.__('speciesAvailableOccRecords') + ' ' + options.countryName, 333, 713 + options.Y_OFFSET, {width: 200, align: 'center'});
+                .text(options.i18n.__('figure') + ' 5. ' + options.i18n.__('speciesAvailableOccRecords') + ' ' + options.countryName, 333, 713 + options.Y_OFFSET, {width: 200, align: 'center'});
 
 
         doc.rect(50, 740 + options.Y_OFFSET, 250, 65)
@@ -581,35 +581,44 @@ function recentDatasets(doc, options) {
 }
 
 function recentPublishers(doc, options) {
-        if (options.mostRecentPublishers.length > 0) {
-                doc.font('Helvetica-Bold').fillColor('#509e2f').fontSize(12);
-                doc.text(options.i18n.__('mostRecentPublishersFrom') + ' ' + options.countryName, 50, doc.y + 40, {continued: false, width: 400, align: 'left'});
+        let headlineY = doc.y + 40;
+        doc.font('Helvetica-Bold').fillColor('#509e2f').fontSize(12);
+        doc.text(options.i18n.__('mostRecentPublishersFrom') + ' ' + options.countryName, 50, doc.y + 40, {continued: false, width: 245, align: 'left'});
 
-
-                doc.font('Helvetica').fontSize(10);
-                let publishers = options.mostRecentPublishers.map(function(p) {
-                        return {txt: p.title};
-                });
-                doc.fillColor('black').text(publishers[0].txt, 55, doc.y + 20, {indent: -5, width: 450}).moveDown();
-                let textBoxY = doc.y;
-                for (let i = 1; i < publishers.length; i++) {
-                        let w = (i < publishers.length - 1) ? 450 : 330;
-                        if (i === publishers.length - 1) {
-                                textBoxY = doc.y;
-                        }
-                        doc.fillColor('black').text(publishers[i].txt, {indent: -5, width: w});
-                        if (i < publishers.length - 1) {
-                                doc.moveDown();
-                        }
+        let bodyY = doc.y + 5;
+        doc.font('Helvetica').fontSize(10);
+        let publishers = options.mostRecentPublishers.map(function(p) {
+                return {txt: p.title};
+        });
+        doc.fillColor('black').text(publishers[0].txt, 55, bodyY + 20, {indent: -5, width: 245}).moveDown();
+        for (let i = 1; i < publishers.length; i++) {
+                doc.fillColor('black').text(publishers[i].txt, {indent: -5, width: 245});
+                if (i !== publishers.length - 1) {
+                        doc.moveDown();
                 }
-                doc.rect(390, textBoxY, 160, 40).fill('#F0FFFF');
-                doc.rect(390, textBoxY, 160, 40).stroke();
-
-                doc.fillColor('black').font('Helvetica-Oblique')
-                        .fontSize(8).text(
-                                options.i18n.__('seeAllPublishersFromThisCountry'), 360, textBoxY + 5, {align: 'right', width: 185})
-                        .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/publishers', {align: 'right', width: 185});
         }
+        let column1bottomY = doc.y;
+
+        doc.font('Helvetica-Bold').fillColor('#509e2f').fontSize(12);
+        doc.text(options.i18n.__('occDowloadedFromGBIFpublishedByInstitutionsInCountry') + ' ' + options.countryName, 300, headlineY, {continued: false, width: 250, align: 'left'});
+        bodyY = Math.max(bodyY, (doc.y + 5));
+        doc.image(options.recordsPublishedByCountryDownloadedByMonth, 300, bodyY, {width: 250, height: 170});
+        let column2bottomY = bodyY + 180;
+
+        let textBoxY = Math.max(column1bottomY, column2bottomY);
+        doc.rect(50, textBoxY, 220, 35).fill('#F0FFFF');
+        doc.rect(50, textBoxY, 220, 35).strokeColor('#509e2f').stroke();
+
+        doc.fillColor('black').font('Helvetica-Oblique')
+                .fontSize(8).text(
+                        options.i18n.__('seeAllPublishersFromThisCountry'), 50, textBoxY + 5, {align: 'right', width: 210})
+                .fillColor('blue').text('https://www.gbif.org/country/' + options.countryCode + '/publishers', {align: 'right', width: 210});
+
+
+        doc.font('Helvetica-Oblique')
+                .fontSize(8)
+                .fillColor('black')
+                .text(options.i18n.__('figure') + ' 6. ' + options.i18n.__('numOccDownloadsByOrgsIn') + ' ' + options.countryName, 325, textBoxY, { width: 200, align: 'center'});
 }
 
 function dataSharingWithCountryOfOrigin(doc, options) {
@@ -641,7 +650,7 @@ function dataSharingWithCountryOfOrigin(doc, options) {
         doc.image(options.occRepatriation, 50, circleY, {width: 270, height: 140});
         doc.font('Helvetica-Oblique')
                 .fontSize(8)
-                .text(options.i18n.__('figure') + ' 6. ' + options.i18n.__('dataSharingWithCountryOfOriginFigureText'), 85, doc.y + 5, {width: '200', align: 'center'});
+                .text(options.i18n.__('figure') + ' 7. ' + options.i18n.__('dataSharingWithCountryOfOriginFigureText'), 85, doc.y + 5, {width: '200', align: 'center'});
 
 
         doc.rect(50, 345, 500, 40)

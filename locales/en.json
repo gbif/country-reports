@@ -4,6 +4,8 @@
 	"twelveMonthReport": "12-month report",
 	"generated": "generated",
 	"figure": "Figure",
+	"monthlyDownloadsByUsersInCountry": "Monthly downloads requested by users in",
+	"occDowloadedFromGBIFpublishedByInstitutionsInCountry": "Occurrence records downloaded from GBIF.org, published by institutions in",
 	"numPeerReviedPublicationsCitingGBIF": "Number of peer-reviewed publications citing use of global GBIF-mediated data",
 	"accessAndUsage": "Access and usage",
 	"dataDownloadsFromUsersIn": "Data downloads on GBIF.org from users in",

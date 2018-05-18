@@ -97,7 +97,7 @@ function getPublicationsGlobal(yearsBack, year) {
     });
 }
 
-async function occDownloadsByMonth(country, year) {
+async function getDownloadsByMonth(country, year) {
     let data = await getAccessAndUsageData(year, country);
 
     let options = {
@@ -113,7 +113,7 @@ async function occDownloadsByMonth(country, year) {
                     'font': '20px Helvetica, Verdana, sans-serif'
                 }
             },
-            'categories': data.occRecordByMonth.categories
+            'categories': data.countryDownloadsByMonth.categories
         },
         yAxis: {
             'labels': {
@@ -134,7 +134,66 @@ async function occDownloadsByMonth(country, year) {
             }
         },
         series: [{
-            data: data.occRecordByMonth.data
+            data: data.countryDownloadsByMonth.data
+        }],
+        credits: {
+            enabled: false
+        },
+        legend: {
+            enabled: false
+        }
+    };
+
+ let res = await rp({
+        method: 'POST', uri: HIGHCHARTS_SERVER_URL, body: {
+            options: options,
+            type: 'png',
+            scale: 4,
+            b64: true
+        },
+        json: true
+    });
+   return res;
+}
+
+async function getRecordsPublishedByCountryDownloadedByMonth(country, year) {
+    let data = await getDownloadedOccurrencesPublishedByCountry(year, country);
+
+    let options = {
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: ''
+        },
+        xAxis: {
+            'labels': {
+                'style': {
+                    'font': '20px Helvetica, Verdana, sans-serif'
+                }
+            },
+            'categories': data.occRecordsByMonth.categories
+        },
+        yAxis: {
+            'labels': {
+                'style': {
+                    'font': '12px Helvetica, Verdana, sans-serif'
+                }
+            },
+            'title': {
+                text: null
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [{
+            data: data.occRecordsByMonth.data
         }],
         credits: {
             enabled: false
@@ -385,8 +444,8 @@ async function getPublishedOccRecords(year, countryCode) {
 async function getAccessAndUsageData(year, countryCode) {
     let twoYearsAgo = moment().subtract(2, 'years').format('YYYY-MM');
     let lastYear = moment().subtract(1, 'years').format('YYYY');
-    let countryDownloadsData = await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/monthlystats?country=' + countryCode.toLowerCase() + '&fromDate=' + twoYearsAgo, json: true} );
-    let totalDownloadsData = await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/monthlystats?&fromDate=' + twoYearsAgo, json: true} );
+    let countryDownloadsData = await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/stats?country=' + countryCode.toLowerCase() + '&fromDate=' + twoYearsAgo, json: true} );
+    let totalDownloadsData = await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/stats?&fromDate=' + twoYearsAgo, json: true} );
     let countryDownloads = 0;
     let totalDownloads = 0;
     _.each(countryDownloadsData[lastYear], function(v) {
@@ -399,14 +458,14 @@ async function getAccessAndUsageData(year, countryCode) {
     let res = {
         countryDownloads: countryDownloads,
         totalDownloads: totalDownloads,
-        occRecordByMonth: {
+        countryDownloadsByMonth: {
             categories: [],
             data: []
         }
     };
     for (let i = 1; i < 13; i++) {
         let cat = moment().subtract(i, 'months').format('YYYY-MM');
-        res.occRecordByMonth.categories.push(cat);
+        res.countryDownloadsByMonth.categories.push(cat);
         let count = 0;
         let parts = cat.split('-');
         let y = parseInt(parts[0]);
@@ -414,14 +473,42 @@ async function getAccessAndUsageData(year, countryCode) {
         if (countryDownloadsData[y] && countryDownloadsData[y][m]) {
             count = countryDownloadsData[y][m];
         }
-        res.occRecordByMonth.data.push(count);
+        res.countryDownloadsByMonth.data.push(count);
     }
+    res.countryDownloadsByMonth.categories.reverse();
+    res.countryDownloadsByMonth.data.reverse();
+    return res;
+}
+
+async function getDownloadedOccurrencesPublishedByCountry(year, countryCode) {
+    let lastYear = moment().subtract(1, 'years').format('YYYY');
+    let countryOccDownloadsData = await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/stats/downloadedRecords?country=' + countryCode.toLowerCase() + '&fromDate=' + lastYear, json: true} );
+    let res = {
+        occRecordsByMonth: {
+            categories: [],
+            data: []
+        }
+    };
+    for (let i = 1; i < 13; i++) {
+        let cat = moment().subtract(i, 'months').format('YYYY-MM');
+        res.occRecordsByMonth.categories.push(cat);
+        let count = 0;
+        let parts = cat.split('-');
+        let y = parseInt(parts[0]);
+        let m = parseInt(parts[1]);
+        if (countryOccDownloadsData[y] && countryOccDownloadsData[y][m]) {
+            count = countryOccDownloadsData[y][m];
+        }
+        res.occRecordsByMonth.data.push(count);
+    }
+    res.occRecordsByMonth.categories.reverse();
+    res.occRecordsByMonth.data.reverse();
     return res;
 }
 
 module.exports = {
     getPublicationsGlobal: getPublicationsGlobal,
-    occDownloadsByMonth: occDownloadsByMonth,
+    getDownloadsByMonth: getDownloadsByMonth,
     getSelectedCountryPublications: getSelectedCountryPublications,
     getCountryOccurencesByKingdom: getCountryOccurencesByKingdom,
     getCountsForSelectedtaxonomicGroups: getCountsForSelectedtaxonomicGroups,
@@ -432,7 +519,8 @@ module.exports = {
     getOccurrenceFacetsForCountry: getOccurrenceFacetsForCountry,
     getProjectsWithCountryAsPartner: getProjectsWithCountryAsPartner,
     getPublishedOccRecords: getPublishedOccRecords,
-    getAccessAndUsageData: getAccessAndUsageData
+    getAccessAndUsageData: getAccessAndUsageData,
+    getRecordsPublishedByCountryDownloadedByMonth: getRecordsPublishedByCountryDownloadedByMonth
 
 }
     ;
