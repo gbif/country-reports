@@ -482,7 +482,8 @@ async function getAccessAndUsageData(year, countryCode) {
 
 async function getDownloadedOccurrencesPublishedByCountry(year, countryCode) {
     let lastYear = moment().subtract(1, 'years').format('YYYY');
-    let countryOccDownloadsData = await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/stats/downloadedRecords?country=' + countryCode.toLowerCase() + '&fromDate=' + lastYear, json: true} );
+    let countryOccDownloadsData =
+      await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/stats/downloadedRecords?country=' + countryCode.toLowerCase() + '&fromDate=' + lastYear, json: true} );
     let res = {
         occRecordsByMonth: {
             categories: [],

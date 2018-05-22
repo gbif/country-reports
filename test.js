@@ -2,7 +2,7 @@ const reportRunner = require('./report');
 const dataProvider = require('./dataProvider');
 const fs = require('fs');
 
-//dataProvider.getAccessAndUsageData(2017, 'DK')
+// dataProvider.getAccessAndUsageData(2017, 'DK')
 /*
 reportRunner.runReport({
     countryCode: 'TZ',

@@ -618,7 +618,7 @@ function recentPublishers(doc, options) {
         doc.font('Helvetica-Oblique')
                 .fontSize(8)
                 .fillColor('black')
-                .text(options.i18n.__('figure') + ' 6. ' + options.i18n.__('numOccDownloadsByOrgsIn') + ' ' + options.countryName, 325, textBoxY, { width: 200, align: 'center'});
+                .text(options.i18n.__('figure') + ' 6. ' + options.i18n.__('numOccDownloadsByOrgsIn') + ' ' + options.countryName, 325, textBoxY, {width: 200, align: 'center'});
 }
 
 function dataSharingWithCountryOfOrigin(doc, options) {
