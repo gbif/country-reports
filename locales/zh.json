@@ -78,6 +78,7 @@
 	"noOccs": "No. of occurrences",
 	"participatesInTheseProjects": "participates in the following projects",
 	"seeAllGbifProjects": "See all GBIF projects",
+	"noDataAvailable": "No data available",
 	"taxonRank": {
 		"class": "class",
 		"superclass": "superclass",
