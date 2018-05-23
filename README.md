@@ -66,6 +66,13 @@ router.get('/country/report/:iso2?', (req, res, next) => {
 });
 ```
 
+### Highcharts generation
+
+Charts are generated from a Highcharts export server, and defaults to the service run by Highcharts here: ``` http://export.highcharts.com```
+
+This service is rate limited to 10 requests pr minute ([terms](https://www.highcharts.com/docs/export-module/terms)), and will suffice for on-the-fly generation from the portal.
+However, if a batch of reports should be generated from CLI, it is necessary to [run a local instance of the export server](https://www.highcharts.com/docs/export-module/setting-up-the-server) and change the config accordingly.
+
 ### Developers
 
 [PDFkit documentation](http://pdfkit.org/)
