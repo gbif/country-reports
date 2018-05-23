@@ -1,5 +1,5 @@
 {
-	"introduction": "Denne rapport giver en række opsummerende grafer, statistikker og andre detaljer om mobilisering og brug af open-access artsdata gennem GBIF netværket på global og lokal skala. Disse summeringer viser ændring over de seneste 12 måneder, hvis ikke andet er angivet. Samlet set kan elementerne i denne rapport bruges til at guide og måle fremskridt i informationstilgængelighed for nationale og internationale forpligtigelser ift biodiversitet og bæredygtig udvikling.",
+	"introduction": "This report provides a series of summary charts, statistics and other details about the mobilization and use of open-access species data through the GBIF network at global and national scales. These metrics show status at the time of report generation, unless otherwise noted. Taken together, the elements of this report can help guide and measure progress toward the information needs for national and international commitments on biodiversity and sustainable development.",
 	"countryReport": "National rapport",
 	"twelveMonthReport": "12-måneders rapport",
 	"generated": "genereret",
@@ -78,6 +78,7 @@
 	"noOccs": "Antal observationer",
 	"participatesInTheseProjects": "deltager i de følgende projekter",
 	"seeAllGbifProjects": "Se alle GBIF-projekter",
+	"noDataAvailable": "No data available",
 	"taxonRank": {
 		"class": "klasse",
 		"superclass": "superklasse",
