@@ -1,5 +1,5 @@
 {
-	"introduction": "This report provides a series of summary charts, statistics and other details about the mobilization and use of open-access species data through the GBIF network at global and national scales. These metrics represent change over the past 12 months, unless otherwise noted. Taken together, the elements of this report can help guide and measure progress toward the information needs for national and international commitments on biodiversity and sustainable development.",
+	"introduction": "This report provides a series of summary charts, statistics and other details about the mobilization and use of open-access species data through the GBIF network at global and national scales. These metrics show status at the time of report generation, unless otherwise noted. Taken together, the elements of this report can help guide and measure progress toward the information needs for national and international commitments on biodiversity and sustainable development.",
 	"countryReport": "Country report",
 	"twelveMonthReport": "12-month report",
 	"generated": "generated",
@@ -78,6 +78,7 @@
 	"noOccs": "No. of occurrences",
 	"participatesInTheseProjects": "participates in the following projects",
 	"seeAllGbifProjects": "See all GBIF projects",
+	"noDataAvailable": "No data available",
 	"taxonRank": {
 		"class": "class",
 		"superclass": "superclass",
