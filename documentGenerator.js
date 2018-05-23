@@ -18,8 +18,7 @@ function header(doc, options) {
         moment.locale(options.locale);
         doc.font('Helvetica-Oblique')
                 .fontSize(9)
-                .text(options.i18n.__('twelveMonthReport'), 400, 130 + options.Y_OFFSET, {width: 150, align: 'right'})
-                .text(options.i18n.__('generated') + ' ' + moment().format('LL'), {width: 150, align: 'right'});
+                .text(options.i18n.__('generated') + ' ' + moment().format('LL'), 400, 130 + options.Y_OFFSET, {width: 150, align: 'right'});
 
         doc.moveTo(50, 240 + options.Y_OFFSET)
                 .lineTo(550, 240 + options.Y_OFFSET)
@@ -768,7 +767,7 @@ function projectParticipation(doc, options) {
 module.exports = {
         header: header,
         secondaryPageHeader: secondaryPageHeader,
-        accessAndUsage, accessAndUsage,
+        accessAndUsage: accessAndUsage,
         datAvailability: datAvailability,
         dataMobilization: dataMobilization,
         dataDownloads: dataDownloads,
