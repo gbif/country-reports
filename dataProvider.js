@@ -427,6 +427,8 @@ async function annualDataGrowth(year, countryCode) {
     });
     if (years[year] && years[parseInt(year) - 1]) {
         return years[year] - years[parseInt(year) - 1];
+    } else if (years[year]) {
+        return years[year];
     } else {
         throw new Error('Not possible to calculate data growth');
     }

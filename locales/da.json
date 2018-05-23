@@ -78,6 +78,7 @@
 	"noOccs": "Antal observationer",
 	"participatesInTheseProjects": "deltager i de følgende projekter",
 	"seeAllGbifProjects": "Se alle GBIF-projekter",
+	"noDataAvailable" : "Ingen data tilgængelige",
 	"taxonRank": {
 		"class": "klasse",
 		"superclass": "superklasse",

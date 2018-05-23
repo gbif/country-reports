@@ -19,6 +19,10 @@ function compileReport(countryCode, options, targetStream) {
             ModDate: 'DD/MM/YYYY' // the date the document was last modified
         }
     });
+    doc.registerFont('Arial', __dirname + '/fonts/Arial-Unicode.ttf');
+    doc.registerFont('Arial-Bold', __dirname + '/fonts/Arial-Unicode-Bold.ttf');
+    doc.registerFont('Arial-Italic', __dirname + '/fonts/Arial-Unicode-Italic.ttf');
+
     let isInvolvedInprojects = options.projectsWithCountryAsPartner.length > 0;
     let totalNumpages = (isInvolvedInprojects) ? 6 : 5;
     doc.pipe(targetStream);
