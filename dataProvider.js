@@ -446,8 +446,8 @@ async function getPublishedOccRecords(year, countryCode) {
 async function getAccessAndUsageData(year, countryCode) {
     let twoYearsAgo = moment().subtract(2, 'years').format('YYYY-MM');
     let lastYear = moment().subtract(1, 'years').format('YYYY');
-    let countryDownloadsData = await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/stats?country=' + countryCode.toLowerCase() + '&fromDate=' + twoYearsAgo, json: true} );
-    let totalDownloadsData = await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/stats?&fromDate=' + twoYearsAgo, json: true} );
+    let countryDownloadsData = await rp({method: 'GET', uri: API_BASE_URL + 'occurrence/download/stats?userCountry=' + countryCode.toLowerCase() + '&fromDate=' + twoYearsAgo, json: true} );
+    let totalDownloadsData = await rp({method: 'GET', uri: API_BASE_URL + 'occurrence/download/stats?&fromDate=' + twoYearsAgo, json: true} );
     let countryDownloads = 0;
     let totalDownloads = 0;
     _.each(countryDownloadsData[lastYear], function(v) {
@@ -485,7 +485,7 @@ async function getAccessAndUsageData(year, countryCode) {
 async function getDownloadedOccurrencesPublishedByCountry(year, countryCode) {
     let lastYear = moment().subtract(1, 'years').format('YYYY');
     let countryOccDownloadsData =
-      await rp({method: 'GET', uri: 'http://api.gbif-dev.org/v1/occurrence/download/stats/downloadedRecords?country=' + countryCode.toLowerCase() + '&fromDate=' + lastYear, json: true} );
+      await rp({method: 'GET', uri: API_BASE_URL + 'occurrence/download/stats/downloadedRecords?publishingCountry=' + countryCode.toLowerCase() + '&fromDate=' + lastYear, json: true} );
     let res = {
         occRecordsByMonth: {
             categories: [],

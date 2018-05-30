@@ -3,7 +3,7 @@ const reportRunner = require('./report');
 const fs = require('fs');
 
 
-let countries = ['KH', 'CN', 'TW', 'ID', 'IR', 'NP', 'PK', 'PH', 'KR', 'VN', 'DK', 'FR', 'US'];
+let countries = ['DK']; // ['KH', 'CN', 'TW', 'ID', 'IR', 'NP', 'PK', 'PH', 'KR', 'VN', 'DK', 'FR', 'US'];
 let running;
 function runNext() {
     if (countries.length > 0) {
