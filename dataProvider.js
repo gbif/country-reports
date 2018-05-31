@@ -374,7 +374,7 @@ function getOccurrenceFacetsForCountry(countryCode) {
 function getProjectsWithCountryAsPartner(countryCode) {
     let body = elasticQueryTemplates.projectsForCountry(countryCode);
     // TODO: update to prod uri once country mappings are in prod
-    return rp({method: 'POST', uri: 'http://cms-search.gbif-dev.org:9200/project/_search', body: body, json: true})
+    return rp({method: 'POST', uri: CONTENTFUL_SEARCH_URL + 'project/_search', body: body, json: true})
         .then(function(res) {
             return (res.hits && res.hits.hits && res.hits.hits.length > 0) ? res.hits.hits.map(function(h) {
                 return {
@@ -483,9 +483,14 @@ async function getAccessAndUsageData(year, countryCode) {
 }
 
 async function getDownloadedOccurrencesPublishedByCountry(year, countryCode) {
-    let lastYear = moment().subtract(1, 'years').format('YYYY');
+    let lastYear = moment().subtract(1, 'years').format('YYYY-MM-DD');
+    let now = moment().format('YYYY-MM-DD');
     let countryOccDownloadsData =
-      await rp({method: 'GET', uri: API_BASE_URL + 'occurrence/download/stats/downloadedRecords?publishingCountry=' + countryCode.toLowerCase() + '&fromDate=' + lastYear, json: true} );
+     await rp(
+         {method: 'GET',
+          uri: API_BASE_URL + 'occurrence/download/stats/downloadedRecords?publishingCountry=' + countryCode.toLowerCase() + '&fromDate=' + lastYear + '&toDate=' + now,
+          json: true}
+        );
     let res = {
         occRecordsByMonth: {
             categories: [],
