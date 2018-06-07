@@ -50,7 +50,8 @@ function peerReviewedLiterature(optYear, optCountryCode) {
                      'bool': {
                         'must': [
                             {'term': {'peerReview': true}},
-                            {'term': {'contentType': 'literature'}}
+                            {'term': {'contentType': 'literature'}},
+                            {'term': {'relevance': 'GBIF_USED'}}
                         ]
                     }
                 }

@@ -244,7 +244,7 @@ function getSelectedCountryPublications(countryCode, year) {
 }
 
 function getCountryOccurencesByKingdom(countryCode, year) {
-    return rp({method: 'GET', uri: API_BASE_URL + 'occurrence/search?country=' + countryCode + '&facet=kingdomKey&limit=0&year=*,' + year, json: true})
+    return rp({method: 'GET', uri: API_BASE_URL + 'occurrence/search?country=' + countryCode + '&facet=kingdomKey&limit=0', json: true})
         .then(function(res) {
             let k = _.zipObject(KINGDOMS, _.map(KINGDOMS, function() {
                 return 0
@@ -373,14 +373,13 @@ function getOccurrenceFacetsForCountry(countryCode) {
 
 function getProjectsWithCountryAsPartner(countryCode) {
     let body = elasticQueryTemplates.projectsForCountry(countryCode);
-    // TODO: update to prod uri once country mappings are in prod
     return rp({method: 'POST', uri: CONTENTFUL_SEARCH_URL + 'project/_search', body: body, json: true})
         .then(function(res) {
             return (res.hits && res.hits.hits && res.hits.hits.length > 0) ? res.hits.hits.map(function(h) {
                 return {
                     _id: h._id,
                     title: h._source.title['en-GB'],
-                    summary: h._source.summary['en-GB'],
+                    summary: h._source.summary['en-GB'].replace('\n\n', ' '),
                     isLead: (h._source.leadPartner && h._source.leadPartner.country === countryCode)
                 };
             }) : [];

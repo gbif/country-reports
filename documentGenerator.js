@@ -190,9 +190,9 @@ function dataMobilization(doc, options) {
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
                 .text(
                         options.publishedOccRecords.globalOccRecords.toLocaleString(options.locale),
-                        70, 750 + options.Y_OFFSET, {width: 180, align: 'center'});
+                        70, 747 + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8).fillColor('black')
-                .text(options.i18n.__('occurrenceRecords'), 100, 768 + options.Y_OFFSET, {width: 120, align: 'center'});
+                .text(options.i18n.__('addedGloballyToGBIF'), 100, 768 + options.Y_OFFSET, {width: 120, align: 'center'});
 
         doc.image(options.occByKingdomChartPublishedBy, 270, 625 + options.Y_OFFSET, {width: 260, height: 150});
         doc.font('Arial-Italic')
@@ -254,7 +254,7 @@ function dataDownloads(doc, options) {
 function recentPeerReviewed(doc, options) {
         if (options.countryPublications.latest.length > 0) {
                 doc.font('Arial-Bold').fillColor('#509e2f').fontSize(12);
-                doc.text(options.i18n.__('recentPeerReviewedArticles') + ' ' + options.countryName, 50, 400, {continued: false, width: 400, align: 'left'});
+                doc.text(options.i18n.__('recentPeerReviewedArticles') + ' ' + options.countryName, 50, 400, {continued: false, width: 500, align: 'left'});
 
 
                 doc.rect(50, 435, 500, 73)
@@ -272,7 +272,7 @@ function recentPeerReviewed(doc, options) {
                                         return a.lastName;
                                 }).join(', ') + ' et al.' :
                                 p.authors.map(function(a) {
-                                        a.lastName;
+                                        return a.lastName;
                                 }).join(', ') + '.';
                         let result = {txt: authors + ' [' + p.year + '] ' + p.title + '.'};
                         if (p.identifiers && p.identifiers.doi) {
@@ -568,7 +568,7 @@ function recentDatasets(doc, options) {
                 doc.fillColor('black').font('Arial-Italic')
                         .fontSize(8).text(
                                 options.i18n.__('seeAllDatsetsFromThisCountry'), 360, textBoxY + 5, {align: 'right', width: 185})
-                        .fillColor('blue').text('https://www.gbif.org/dataset/search?publishingCountry=' + options.countryCode + '/publications', {align: 'right', width: 185});
+                        .fillColor('blue').text('https://www.gbif.org/dataset/search?publishingCountry=' + options.countryCode , {align: 'right', width: 185});
 
                 let y = doc.y + 20;
                 doc.moveTo(50, y)
@@ -656,11 +656,11 @@ function dataSharingWithCountryOfOrigin(doc, options) {
                 .text(options.i18n.__('figure') + ' 7. ' + options.i18n.__('dataSharingWithCountryOfOriginFigureText'), 85, doc.y + 5, {width: '200', align: 'center'});
 
 
-        doc.rect(50, 345, 500, 40)
+        doc.rect(50, 348, 500, 40)
                 .fill('#D3D3D3');
         doc.fillColor('black').font('Arial').fontSize(8).text(
                 options.i18n.__('numRecordsSharedOverTime'),
-                60, 350, {width: 490});
+                60, 353, {width: 490});
 
         let y = doc.y + 30;
         doc.moveTo(50, y)
