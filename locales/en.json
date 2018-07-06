@@ -1,6 +1,6 @@
 {
 	"introduction": "This report provides a series of summary charts, statistics and other details about the mobilization and use of open-access species data through the GBIF network at global and national scales. These metrics show status at the time of report generation, unless otherwise noted. Taken together, the elements of this report can help guide and measure progress toward the information needs for national and international commitments on biodiversity and sustainable development.",
-	"countryReport": "Country report",
+	"countryReport": "Activity report",
 	"twelveMonthReport": "12-month report",
 	"generated": "generated",
 	"figure": "Figure",
@@ -244,7 +244,6 @@
 		"NR": "Nauru",
 		"NP": "Nepal",
 		"NL": "Netherlands",
-		"AN": "Netherlands Antilles",
 		"NC": "New Caledonia",
 		"NZ": "New Zealand",
 		"NI": "Nicaragua",
@@ -305,7 +304,7 @@
 		"SE": "Sweden",
 		"CH": "Switzerland",
 		"SY": "Syrian Arab Republic",
-		"TW": "Chinese Taipei",
+		"TW": "Taiwan",
 		"TJ": "Tajikistan",
 		"TZ": "Tanzania, United Republic of",
 		"TH": "Thailand",
@@ -336,9 +335,6 @@
 		"EH": "Western Sahara",
 		"YE": "Yemen",
 		"ZM": "Zambia",
-		"XZ": "International waters",
-		"ZW": "Zimbabwe",
-		"QO": "Oceania",
-		"ZZ": "Unknown country"
+		"ZW": "Zimbabwe"
 	}
 }

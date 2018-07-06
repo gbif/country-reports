@@ -7,7 +7,9 @@ function header(doc, options) {
 
         doc.font('Arial').fontSize(26)
                 .text(options.i18n.__('countryReport'), 320, 58 + options.Y_OFFSET);
-        doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 510, 55 + options.Y_OFFSET, {width: 30});
+        if (['FK'].indexOf(options.countryCode) === -1) {
+          doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 510, 55 + options.Y_OFFSET, {width: 30});
+        }
         // some vector graphics
 
         doc.fontSize(26)
@@ -18,7 +20,7 @@ function header(doc, options) {
         moment.locale(options.locale);
         doc.font('Arial-Italic')
                 .fontSize(9)
-                .text(options.i18n.__('generated') + ' ' + moment().format('LL'), 400, 130 + options.Y_OFFSET, {width: 150, align: 'right'});
+                .text(options.i18n.__('generated') + ' ' + moment().format('MMMM, YYYY'), 400, 130 + options.Y_OFFSET, {width: 150, align: 'right'});
 
         doc.moveTo(50, 240 + options.Y_OFFSET)
                 .lineTo(550, 240 + options.Y_OFFSET)
@@ -45,7 +47,7 @@ function accessAndUsage(doc, options) {
         doc.font('Arial-Bold').fontSize(15)
                 .text(options.countryName, 330, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8)
-                .text(options.i18n.__('contributedTo'), 330, 323 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.i18n.__('contributedTo'), 330, 327 + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
                 .text(options.countryPublications.reportYear, 330, 337 + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8).fillColor('black')
@@ -180,7 +182,7 @@ function dataMobilization(doc, options) {
         doc.font('Arial-Bold').fontSize(15)
                 .text(options.countryName, 70, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8)
-                .text(options.i18n.__('published'), 70, 688 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.i18n.__('published'), 70, 692 + options.Y_OFFSET, {width: 180, align: 'center'});
 
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
                 .text(options.publishedOccRecords.countryOccRecords.toLocaleString(options.locale), 70, 702 + options.Y_OFFSET, {width: 180, align: 'center'});
@@ -203,7 +205,9 @@ function dataMobilization(doc, options) {
 }
 
 function secondaryPageHeader(doc, options, pageNumber, totalPages) {
-        doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 50, 50 + options.Y_OFFSET, {width: 30});
+        if (['FK'].indexOf(options.countryCode) === -1) {
+                doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 50, 50 + options.Y_OFFSET, {width: 30});
+        }
         doc.image(__dirname + '/assets/green_bar.png', 110, 52 + options.Y_OFFSET, {height: 20, width: 440});
         doc.fillColor('black').font('Arial').fontSize(9).text(pageNumber + ' | ' + totalPages, 530, 82 + options.Y_OFFSET);
         doc.moveTo(50, 100 + options.Y_OFFSET)
@@ -225,10 +229,10 @@ function dataDownloads(doc, options) {
         doc.font('Arial-Bold').fontSize(15)
                 .text(options.countryName, 70, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8)
-                .text(options.i18n.__('made'), 70, 240 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.i18n.__('made'), 70, 243 + options.Y_OFFSET, {width: 180, align: 'center'});
 
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
-                .text(options.accessAndUsageData.countryDownloads, 70, 252 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.accessAndUsageData.countryDownloads.toLocaleString(options.locale), 70, 252 + options.Y_OFFSET, {width: 180, align: 'center'});
 
         doc.font('Arial').fontSize(8).fillColor('black')
                 .text(options.i18n.__('dowloadRequestsRepresenting'), 70, 275 + options.Y_OFFSET, {width: 170, align: 'center'});
@@ -568,7 +572,7 @@ function recentDatasets(doc, options) {
                 doc.fillColor('black').font('Arial-Italic')
                         .fontSize(8).text(
                                 options.i18n.__('seeAllDatsetsFromThisCountry'), 360, textBoxY + 5, {align: 'right', width: 185})
-                        .fillColor('blue').text('https://www.gbif.org/dataset/search?publishingCountry=' + options.countryCode , {align: 'right', width: 185});
+                        .fillColor('blue').text('https://www.gbif.org/dataset/search?publishingCountry=' + options.countryCode, {align: 'right', width: 185});
 
                 let y = doc.y + 20;
                 doc.moveTo(50, y)
@@ -634,21 +638,21 @@ function dataSharingWithCountryOfOrigin(doc, options) {
         doc.font('Arial-Bold').fontSize(15).fillColor('black')
                 .text(options.countryName, 330, nameY, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8)
-                .text(options.i18n.__('publishesDataFrom'), 330, circleY + 55, {width: 180, align: 'center'});
+                .text(options.i18n.__('publishesDataFrom'), 330, circleY + 62, {width: 180, align: 'center'});
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
-                .text(options.occurrenceFacets.COUNTRY.toLocaleString(options.locale), 330, circleY + 65, {width: 180, align: 'center'});
+                .text(options.occurrenceFacets.COUNTRY.toLocaleString(options.locale), 330, circleY + 70, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8).fillColor('black')
-                .text(options.i18n.__('countriesTerritoriesAndislands'), 340, circleY + 80, {width: 160, align: 'center'});
+                .text(options.i18n.__('countriesTerritoriesAndislands'), 340, circleY + 85, {width: 160, align: 'center'});
         doc.font('Arial').fontSize(8).fillColor('black')
                 .text(options.i18n.__('including'), {width: 160, align: 'center'});
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
-                .text(options.occurrenceFacets.count.toLocaleString(options.locale), 330, circleY + 100, {width: 180, align: 'center'});
+                .text(options.occurrenceFacets.count.toLocaleString(options.locale), 330, circleY + 105, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8).fillColor('black')
-                .text(options.i18n.__('occurrences') + ' ' + options.i18n.__('in'), 330, circleY + 115, {width: 180, align: 'center'});
+                .text(options.i18n.__('occurrences') + ' ' + options.i18n.__('in'), 330, circleY + 125, {width: 180, align: 'center'});
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
-                .text(options.occurrenceFacets.DATASET_KEY.toLocaleString(options.locale), 330, circleY + 130, {width: 180, align: 'center'});
+                .text(options.occurrenceFacets.DATASET_KEY.toLocaleString(options.locale), 330, circleY + 132, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8).fillColor('black')
-                .text(options.i18n.__('occurrenceDatasets'), 330, circleY + 145, {width: 180, align: 'center'});
+                .text(options.i18n.__('occurrenceDatasets'), 330, circleY + 147, {width: 180, align: 'center'});
 
         doc.image(options.occRepatriation, 50, circleY, {width: 270, height: 140});
         doc.font('Arial-Italic')

@@ -447,7 +447,9 @@ async function getAccessAndUsageData(year, countryCode) {
     let lastYear = moment().subtract(1, 'years').format('YYYY');
     let countryDownloadsData = await rp({method: 'GET', uri: API_BASE_URL + 'occurrence/download/stats?userCountry=' + countryCode.toLowerCase() + '&fromDate=' + twoYearsAgo, json: true} );
     let totalDownloadsData = await rp({method: 'GET', uri: API_BASE_URL + 'occurrence/download/stats?&fromDate=' + twoYearsAgo, json: true} );
-    let countryDownloads = 0;
+  // let countryDownloadsData = require('./mockDataProvider').getMockData();
+  // let totalDownloadsData = require('./mockDataProvider').getMockData();
+   let countryDownloads = 0;
     let totalDownloads = 0;
     _.each(countryDownloadsData[lastYear], function(v) {
         countryDownloads += parseInt(v);
@@ -484,12 +486,13 @@ async function getAccessAndUsageData(year, countryCode) {
 async function getDownloadedOccurrencesPublishedByCountry(year, countryCode) {
     let lastYear = moment().subtract(1, 'years').format('YYYY-MM-DD');
     let now = moment().format('YYYY-MM-DD');
+   // let countryOccDownloadsData = require('./mockDataProvider').getMockData();
     let countryOccDownloadsData =
      await rp(
          {method: 'GET',
           uri: API_BASE_URL + 'occurrence/download/stats/downloadedRecords?publishingCountry=' + countryCode.toLowerCase() + '&fromDate=' + lastYear + '&toDate=' + now,
           json: true}
-        );
+     );
     let res = {
         occRecordsByMonth: {
             categories: [],
