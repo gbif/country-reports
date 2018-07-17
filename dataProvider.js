@@ -8,6 +8,7 @@ const moment = require('moment');
 const KINGDOMS = require('./enums').KINGDOMS;
 const SELECTED_TAXONOMIC_GROUPS = require('./enums').SELECTED_TAXONOMIC_GROUPS;
 const API_BASE_URL = require('./config').API_BASE_URL;
+const API_BASE_URL_STATS = require('./config').API_BASE_URL_STATS;
 const CONTENTFUL_SEARCH_URL = require('./config').CONTENTFUL_SEARCH_URL;
 const ANALYTICS_COUNTRY_BASEURL = require('./config').ANALYTICS_COUNTRY_BASEURL;
 const ANALYTICS_GLOBAL_BASEURL = require('./config').ANALYTICS_GLOBAL_BASEURL;
@@ -445,8 +446,8 @@ async function getPublishedOccRecords(year, countryCode) {
 async function getAccessAndUsageData(year, countryCode) {
     let twoYearsAgo = moment().subtract(2, 'years').format('YYYY-MM');
     let lastYear = moment().subtract(1, 'years').format('YYYY');
-    let countryDownloadsData = await rp({method: 'GET', uri: API_BASE_URL + 'occurrence/download/stats?userCountry=' + countryCode.toLowerCase() + '&fromDate=' + twoYearsAgo, json: true} );
-    let totalDownloadsData = await rp({method: 'GET', uri: API_BASE_URL + 'occurrence/download/stats?&fromDate=' + twoYearsAgo, json: true} );
+    let countryDownloadsData = await rp({method: 'GET', uri: API_BASE_URL_STATS + 'occurrence/download/statistics/downloadsByUserCountry?userCountry=' + countryCode.toLowerCase() + '&fromDate=' + twoYearsAgo, json: true} );
+    let totalDownloadsData = await rp({method: 'GET', uri: API_BASE_URL_STATS + 'occurrence/download/statistics/downloadsByUserCountry?&fromDate=' + twoYearsAgo, json: true} );
     let countryDownloads = 0;
     let totalDownloads = 0;
     _.each(countryDownloadsData[lastYear], function(v) {
@@ -487,7 +488,7 @@ async function getDownloadedOccurrencesPublishedByCountry(year, countryCode) {
     let countryOccDownloadsData =
      await rp(
          {method: 'GET',
-          uri: API_BASE_URL + 'occurrence/download/stats/downloadedRecords?publishingCountry=' + countryCode.toLowerCase() + '&fromDate=' + lastYear + '&toDate=' + now,
+          uri: API_BASE_URL_STATS + 'occurrence/download/statistics/downloadedRecordsByDataset?publishingCountry=' + countryCode.toLowerCase() + '&fromDate=' + lastYear + '&toDate=' + now,
           json: true}
      );
     let res = {
