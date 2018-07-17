@@ -125,5 +125,3 @@ function getLocales() {
 module.exports = {
     runReport: runReport
 };
-
-

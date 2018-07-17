@@ -12,7 +12,7 @@ function runNext() {
     if (countries.length > 0) {
         let countryCode = countries.pop();
         console.log('Running ' + countryCode);
-        running = fs.createWriteStream('/Users/thomas/countryreports/GBIF_CountryReport_' + countryCode + '.pdf');
+        running = fs.createWriteStream('./reports/GBIF_CountryReport_' + countryCode + '.pdf');
         running.on('finish', function() {
             setTimeout(runNext, 1000);
         });
@@ -35,4 +35,3 @@ function runNext() {
 }
 
 runNext();
-
