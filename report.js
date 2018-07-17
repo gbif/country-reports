@@ -12,7 +12,7 @@ function compileReport(countryCode, options, targetStream) {
         margin: 25,
         info: {
             Title: 'GBIF Country Report ' + countryCode,
-            Author: 'The GBIF secretariat', // the name of the author
+            Author: 'The GBIF Secretariat', // the name of the author
             Subject: '', // the subject of the document
             Keywords: 'Annual report;GBIF;' + countryCode, // keywords associated with the document
             CreationDate: 'DD/MM/YYYY', // the date the document was created (added automatically by PDFKit)

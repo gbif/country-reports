@@ -20,7 +20,7 @@ function header(doc, options) {
         moment.locale(options.locale);
         doc.font('Arial-Italic')
                 .fontSize(9)
-                .text(options.i18n.__('generated') + ' ' + moment().format('MMMM, YYYY'), 400, 130 + options.Y_OFFSET, {width: 150, align: 'right'});
+                .text(options.i18n.__('generated') + ' ' + moment().format('MMMM YYYY'), 400, 130 + options.Y_OFFSET, {width: 150, align: 'right'});
 
         doc.moveTo(50, 240 + options.Y_OFFSET)
                 .lineTo(550, 240 + options.Y_OFFSET)
@@ -703,7 +703,7 @@ function topDataContributors(doc, options) {
         let datasets = options.topDatasets.map(function(p) {
                 return {
                         txt: p.title + '. ' + p._count.toLocaleString(options.locale) + ' ' + options.i18n.__('occurrences') + ' '
-                                + options.i18n.__('in') + ' ' + options.countryName + '. (' + options.i18n.__('lastUpdated') + ' ' + moment(p.modified).format('ll') + ') ',
+                                + options.i18n.__('in') + ' ' + options.countryName + '. (' + options.i18n.__('lastUpdated') + ' ' + moment(p.modified).format('D MMM YYYY') + ') ',
                         doi: 'https://doi.org/' + p.doi
                 };
         });
