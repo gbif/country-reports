@@ -380,8 +380,11 @@ function getProjectsWithCountryAsPartner(countryCode) {
                 return {
                     _id: h._id,
                     title: h._source.title['en-GB'],
-                    summary: h._source.summary['en-GB'].replace('\n\n', ' '),
-                    isLead: (h._source.leadPartner && h._source.leadPartner.country === countryCode)
+                    summary: (h._source.summary) ? h._source.summary['en-GB'].replace('\n\n', ' ') : '',
+                    isLead: (h._source.leadPartner && h._source.leadPartner.country === countryCode),
+                    programme: (h._source.programme && h._source.programme.title) ? h._source.programme.title['en-GB'] : '',
+                    start: h._source.start,
+                    end: h._source.end
                 };
             }) : [];
         })

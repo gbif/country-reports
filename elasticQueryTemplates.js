@@ -35,6 +35,9 @@ function projectsForCountry(countryCode) {
                     }
                   }
                 }
+              },
+              {
+                'term': {'contractCountry': countryCode}
               }
             ]
           }
