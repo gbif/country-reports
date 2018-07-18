@@ -27,14 +27,20 @@ class PDFDocumentWithTables extends PDFDocument {
         const rowSpacing = options.rowSpacing || 5;
         const usableWidth = options.width || (this.page.width - this.page.margins.left - this.page.margins.right);
 
+        const columnContainerWidth = usableWidth / columnCount;
+        const columnWidth = columnContainerWidth - columnSpacing;
+        const columnWidths = [0.2 * usableWidth - columnSpacing, 0.6 * usableWidth - columnSpacing, 0.3 * usableWidth - columnSpacing];
+        const columnStartX = [0, columnWidths[0], columnWidths[0] + columnWidths[1]];
+
         const prepareHeader = options.prepareHeader || (() => {});
         const prepareRow = options.prepareRow || (() => {});
         const computeRowHeight = (row) => {
             let result = 0;
 
+            var i = 0;
             row.forEach((cell) => {
                 const cellHeight = this.heightOfString(cell, {
-                    width: columnWidth,
+                    width: columnWidths[i++],
                     align: 'left'
                 });
                 result = Math.max(result, cellHeight);
@@ -43,8 +49,6 @@ class PDFDocumentWithTables extends PDFDocument {
             return result + rowSpacing;
         };
 
-        const columnContainerWidth = usableWidth / columnCount;
-        const columnWidth = columnContainerWidth - columnSpacing;
         const maxY = this.page.height - this.page.margins.bottom;
 
         let rowBottomY = 0;
@@ -64,8 +68,8 @@ this.addPage();
 
         // Print all headers
         table.headers.forEach((header, i) => {
-            this.text(header, startX + i * columnContainerWidth, startY, {
-                width: columnWidth,
+            this.text(header, startX + columnStartX[i], startY, {
+                width: columnWidths[i],
                 align: 'left'
             });
         });
@@ -95,8 +99,8 @@ this.addPage();
 
             // Print all cells of the current row
             row.forEach((cell, i) => {
-                this.text(cell, startX + i * columnContainerWidth, startY, {
-                    width: columnWidth,
+                this.text(cell, startX + columnStartX[i], startY, {
+                    width: columnWidths[i],
                     align: 'left'
                 });
             });
