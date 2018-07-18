@@ -288,25 +288,37 @@ function recentPeerReviewed(doc, options) {
                                 p.authors.map(function(a) {
                                         return a.lastName;
                                 }).join(', ') + '.';
-                        let result = {txt: authors + ' [' + p.year + '] ' + p.title + '.'};
+                        let result = {
+                                txt: authors + ' (' + p.year + ') ' + p.title + '. ',
+                                source: p.source + '. '
+                        };
                         if (p.identifiers && p.identifiers.doi) {
                                 result.doi = 'https://doi.org/' + p.identifiers.doi;
                         }
                         return result;
                 });
-                doc.fillColor('black').text(publications[0].txt, 55, 520, {indent: -5, width: 450});
-                if (publications[0].doi) {
-                        doc.fillColor('blue').text(publications[0].doi);
-                        doc.link(doc.x, doc.y-doc.currentLineHeight(), doc.widthOfString(publications[0].doi), doc.currentLineHeight(), publications[0].doi);
-                }
+
                 doc.moveDown();
+                doc.x = 55;
+
                 let textBoxY = doc.y;
-                for (let i = 1; i < publications.length; i++) {
+                for (let i = 0; i < publications.length; i++) {
                         let w = (i < publications.length - 1) ? 450 : 325;
                         if (i === publications.length - 1) {
                                 textBoxY = doc.y;
                         }
-                        doc.fillColor('black').text(publications[i].txt, {indent: -5, width: w});
+
+                        if (publications[i].txt.indexOf("et al.") > 0) {
+                                var etal = publications[i].txt.indexOf("et al.");
+                                doc.fillColor('black').text(publications[i].txt.slice(0, etal), {indent: -5, width: w, continued: true});
+                                doc.font('Arial-Italic').text("et al.", {continued: true});
+                                doc.font('Arial').text(publications[i].txt.slice(etal+6), {continued: true});
+                                doc.font('Arial-Italic').text(publications[i].source).font('Arial');
+                        } else {
+                                doc.fillColor('black').text(publications[i].txt, {indent: -5, width: w, continued: true});
+                                doc.font('Arial-Italic').text(publications[i].source).font('Arial');
+                        }
+
                         if (publications[i].doi) {
                                 doc.fillColor('blue').text(publications[i].doi);
                                 doc.link(doc.x, doc.y-doc.currentLineHeight(), doc.widthOfString(publications[i].doi), doc.currentLineHeight(), publications[i].doi);
@@ -571,15 +583,20 @@ function recentDatasets(doc, options) {
 
                 doc.font('Arial').fontSize(10);
                 let datasets = options.mostRecentDatasets.map(function(p) {
-                        return {txt: p.title + '. ' + options.i18n.__('publishedBy') + ' ' + p._organisationTitle, doi: 'https://doi.org/' + p.doi};
+                        return {
+                                txt: p.title + '. ',
+                                published: options.i18n.__('publishedBy') + ' ' + p._organisationTitle,
+                                doi: 'https://doi.org/' + p.doi
+                        };
                 });
-                doc.fillColor('black').text(datasets[0].txt, 55, doc.y + 5, {indent: -5, width: 450});
-                doc.fillColor('blue').text(datasets[0].doi);
-                doc.link(doc.x, doc.y-doc.currentLineHeight(), doc.widthOfString(datasets[0].doi), doc.currentLineHeight(), datasets[0].doi);
+
                 doc.moveDown();
-                for (let i = 1; i < datasets.length && doc.y < 425; i++) {
-                        doc.fillColor('black').text(datasets[i].txt, {indent: -5, width: 450});
-                        doc.fillColor('blue').text(datasets[i].doi);
+                doc.x = 55;
+
+                for (let i = 0; i < datasets.length && doc.y < 425; i++) {
+                        doc.fillColor('black').text(datasets[i].txt, {indent: -5, width: 450, continued: true});
+                        doc.font('Arial-Italic').text(datasets[i].published);
+                        doc.fillColor('blue').font('Arial').text(datasets[i].doi);
                         doc.link(doc.x, doc.y-doc.currentLineHeight(), doc.widthOfString(datasets[i].doi), doc.currentLineHeight(), datasets[i].doi);
                         if (i < datasets.length - 1) {
                                 doc.moveDown();
@@ -587,14 +604,14 @@ function recentDatasets(doc, options) {
                 }
 
                 let textBoxY = doc.y + 5;
-		doc.rect(50, textBoxY, 500, 20).fill('#F0FFFF');
-		doc.rect(50, textBoxY, 500, 20).strokeColor('#509e2f').stroke();
+                doc.rect(50, textBoxY, 500, 20).fill('#F0FFFF');
+                doc.rect(50, textBoxY, 500, 20).strokeColor('#509e2f').stroke();
 
-		doc.fillColor('black').font('Arial-Italic')
-			.fontSize(8).text(options.i18n.__('seeAllDatsetsFromThisCountry') + ': ', 55, textBoxY + 5, {align: 'left', width: 495, continued: true})
-			.fillColor('blue').text('gbif.org/dataset/search?publishing_country=' + options.countryCode);
+                doc.fillColor('black').font('Arial-Italic')
+                        .fontSize(8).text(options.i18n.__('seeAllDatsetsFromThisCountry') + ': ', 55, textBoxY + 5, {align: 'left', width: 495, continued: true})
+                        .fillColor('blue').text('gbif.org/dataset/search?publishing_country=' + options.countryCode);
 
-		doc.link(50, textBoxY, 500, 20, 'https://www.gbif.org/dataset/search?publishing_country=' + options.countryCode);
+                doc.link(50, textBoxY, 500, 20, 'https://www.gbif.org/dataset/search?publishing_country=' + options.countryCode);
 
                 let y = doc.y + 20;
                 doc.moveTo(50, y)
@@ -724,15 +741,21 @@ function topDataContributors(doc, options) {
         moment.locale(options.locale);
         let datasets = options.topDatasets.map(function(p) {
                 return {
-                        txt: p.title + '. ' + p._count.toLocaleString(options.locale) + ' ' + options.i18n.__('occurrences') + ' '
-                                + options.i18n.__('in') + ' ' + options.countryName + '. (' + options.i18n.__('lastUpdated') + ' ' + moment(p.modified).format('D MMM YYYY') + ') ',
+                        txt: p.title + '. ',
+                        count: p._count.toLocaleString(options.locale) + ' ' + options.i18n.__('occurrences') + ' ' + options.i18n.__('in') + ' ' + options.countryName + '. ',
+                        updated: '(' + options.i18n.__('lastUpdated') + ' ' + moment(p.modified).format('D MMM YYYY') + ') ',
                         doi: 'https://doi.org/' + p.doi
                 };
         });
+
         doc.font('Arial').fontSize(10);
-        doc.font('Arial').fontSize(10).fillColor('black').text(datasets[0].txt, 310, bodyY + 20, {indent: -5, width: 250}).moveDown();
-        for (let i = 1; i < datasets.length; i++) {
-                doc.fillColor('black').text(datasets[i].txt, {indent: -5, width: 250});
+        doc.moveDown();
+        doc.x = 310;
+
+        for (let i = 0; i < datasets.length; i++) {
+                doc.fillColor('black').text(datasets[i].txt, {indent: -5, width: 250, continued: true});
+                doc.font('Arial-Italic').text(datasets[i].count, {continued: true});
+                doc.font('Arial').text(datasets[i].updated);
                 if (i < datasets.length - 1) {
                         doc.moveDown();
                 }
