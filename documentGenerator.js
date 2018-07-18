@@ -1,21 +1,24 @@
 const _ = require('lodash');
 const moment = require('moment');
+const PNG = require('png-js');
+
 function header(doc, options) {
         doc.image(__dirname + '/assets/GBIF-2015-full.png', 40, 45 + options.Y_OFFSET, {height: 38}); // → Width of about 183.5px
         doc.image(__dirname + '/assets/green_bar.png', 30, 95 + options.Y_OFFSET, {height: 20, width: 540});
 
-        doc.font('Arial').fontSize(26).text(options.i18n.__('countryReport'), 320, 44 + options.Y_OFFSET);
+        doc.font('Arial').fontSize(26).text(options.i18n.__('countryReport') + flagWidth, 320, 44 + options.Y_OFFSET);
         if (['FK'].indexOf(options.countryCode) === -1) {
-          doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 510,
-                    45 + options.Y_OFFSET + (38.0/729*58), // Align with top of black bar in logo
-                    {height: (38.0/729*522)}); // Size to the height of the black bar in the logo
-        }
-        // some vector graphics
+                var flagPng = PNG.load(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png');
+                var flagHeight = (38.0/729*522); // Size to the height of the black bar in the logo
+                var flagWidth = flagPng.width * (flagHeight / flagPng.height);
 
-        doc.fontSize(26)
-                .text(options.countryName, 50, 145 + options.Y_OFFSET);
-        doc.fontSize(9)
-                .text(options.i18n.__('introduction', options.countryName), 50, 175 + options.Y_OFFSET);
+          doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 570 - flagWidth,
+                    45 + options.Y_OFFSET + (38.0/729*58), // Align with top of black bar in logo
+                    {height: flagHeight});
+        }
+
+        doc.fontSize(26).text(options.countryName, 50, 145 + options.Y_OFFSET);
+        doc.fontSize(9).text(options.i18n.__('introduction', options.countryName), 50, 175 + options.Y_OFFSET);
 
         moment.locale(options.locale);
         doc.font('Arial-Italic')
