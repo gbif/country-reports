@@ -584,9 +584,9 @@ function recentDatasets(doc, options) {
 
 		doc.fillColor('black').font('Arial-Italic')
 			.fontSize(8).text(options.i18n.__('seeAllDatsetsFromThisCountry') + ': ', 55, textBoxY + 5, {align: 'left', width: 495, continued: true})
-			.fillColor('blue').text('gbif.org/dataset/search?publishingCountry=' + options.countryCode);
+			.fillColor('blue').text('gbif.org/dataset/search?publishing_country=' + options.countryCode);
 
-		doc.link(50, textBoxY, 500, 20, 'https://www.gbif.org/dataset/search?publishingCountry=' + options.countryCode);
+		doc.link(50, textBoxY, 500, 20, 'https://www.gbif.org/dataset/search?publishing_country=' + options.countryCode);
 
                 let y = doc.y + 20;
                 doc.moveTo(50, y)
