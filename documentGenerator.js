@@ -1,14 +1,14 @@
 const _ = require('lodash');
 const moment = require('moment');
 function header(doc, options) {
-        doc.image(__dirname + '/assets/GBIF-2015-full.png', 40, 45 + options.Y_OFFSET, {width: 180});
+        doc.image(__dirname + '/assets/GBIF-2015-full.png', 40, 45 + options.Y_OFFSET, {height: 38}); // → Width of about 183.5px
         doc.image(__dirname + '/assets/green_bar.png', 30, 95 + options.Y_OFFSET, {height: 20, width: 540});
 
-
-        doc.font('Arial').fontSize(26)
-                .text(options.i18n.__('countryReport'), 320, 58 + options.Y_OFFSET);
+        doc.font('Arial').fontSize(26).text(options.i18n.__('countryReport'), 320, 44 + options.Y_OFFSET);
         if (['FK'].indexOf(options.countryCode) === -1) {
-          doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 510, 55 + options.Y_OFFSET, {width: 30});
+          doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 510,
+                    45 + options.Y_OFFSET + (38.0/729*58), // Align with top of black bar in logo
+                    {height: (38.0/729*522)}); // Size to the height of the black bar in the logo
         }
         // some vector graphics
 
@@ -206,7 +206,7 @@ function dataMobilization(doc, options) {
 
 function secondaryPageHeader(doc, options, pageNumber, totalPages) {
         if (['FK'].indexOf(options.countryCode) === -1) {
-                doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 50, 50 + options.Y_OFFSET, {width: 30});
+                doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 50, 52 + options.Y_OFFSET, {height: 20});
         }
         doc.image(__dirname + '/assets/green_bar.png', 110, 52 + options.Y_OFFSET, {height: 20, width: 440});
         doc.fillColor('black').font('Arial').fontSize(9).text(pageNumber + ' | ' + totalPages, 530, 82 + options.Y_OFFSET);
@@ -787,5 +787,4 @@ module.exports = {
         dataSharingWithCountryOfOrigin: dataSharingWithCountryOfOrigin,
         topDataContributors: topDataContributors,
         projectParticipation: projectParticipation
-
 };
