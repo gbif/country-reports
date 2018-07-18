@@ -6,7 +6,7 @@ function header(doc, options) {
         doc.image(__dirname + '/assets/GBIF-2015-full.png', 40, 45 + options.Y_OFFSET, {height: 38}); // → Width of about 183.5px
         doc.image(__dirname + '/assets/green_bar.png', 30, 95 + options.Y_OFFSET, {height: 20, width: 540});
 
-        doc.font('Arial').fontSize(26).text(options.i18n.__('countryReport') + flagWidth, 320, 44 + options.Y_OFFSET);
+        doc.font('Arial').fontSize(26).text(options.i18n.__('countryReport'), 320, 44 + options.Y_OFFSET);
         if (['FK'].indexOf(options.countryCode) === -1) {
                 var flagPng = PNG.load(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png');
                 var flagHeight = (38.0/729*522); // Size to the height of the black bar in the logo
@@ -637,9 +637,9 @@ function recentPublishers(doc, options) {
         doc.fillColor('black').font('Arial-Italic')
                 .fontSize(8).text(
                         options.i18n.__('seeAllPublishersFromThisCountry'), 50, textBoxY + 5, {align: 'right', width: 210})
-                .fillColor('blue').text('gbif.org/country/' + options.countryCode + '/publishers#BADLINK', {align: 'right', width: 210});
+                .fillColor('blue').text('gbif.org/publisher/search?country=' + options.countryCode, {align: 'right', width: 210});
 
-        doc.link(50, textBoxY, 220, 35, 'https://www.gbif.org/country/' + options.countryCode + '/publishers');
+        doc.link(50, textBoxY, 220, 35, 'https://www.gbif.org/publisher/search?country=' + options.countryCode);
 
         doc.font('Arial-Italic')
                 .fontSize(8)
@@ -737,27 +737,14 @@ function topDataContributors(doc, options) {
         let column2bottomY = doc.y;
         let textBoxY = Math.max(column1bottomY, column2bottomY) + 5;
 
-
-        doc.rect(50, textBoxY, 245, 40).fill('#F0FFFF');
-        doc.rect(50, textBoxY, 245, 40).lineWidth(2).strokeColor('#509e2f').stroke();
-
-        doc.fillColor('black').font('Arial-Italic')
-                .fontSize(8).text(
-                        options.i18n.__('seeAllContributingCountries'), 50, textBoxY + 5, {align: 'right', width: 240})
-                .fillColor('blue').text('gbif.org/country/' + options.countryCode + '/about/countries#BADLINK', {align: 'right', width: 240});
-
-        doc.link(50, textBoxY, 245, 40, 'https://www.gbif.org/country/' + options.countryCode + '/about/countries');
-
-
-        doc.rect(305, textBoxY, 245, 40).fill('#F0FFFF');
-        doc.rect(305, textBoxY, 245, 40).strokeColor('#509e2f').stroke();
+        doc.rect(50, textBoxY, 500, 40).fill('#F0FFFF');
+        doc.rect(50, textBoxY, 500, 40).strokeColor('#509e2f').stroke();
 
         doc.fillColor('black').font('Arial-Italic')
-                .fontSize(8).text(
-                        options.i18n.__('seeAllContributingDatasets'), 305, textBoxY + 5, {align: 'right', width: 240})
-                .fillColor('blue').text('gbif.org/country/' + options.countryCode + '/about/datasets#BADLINK', {align: 'right', width: 240});
+                .fontSize(8).text(options.i18n.__('seeAllContributing'), 50, textBoxY + 5, {align: 'right', width: 495})
+                .fillColor('blue').text('gbif.org/country/' + options.countryCode, {align: 'right', width: 495});
 
-        doc.link(305, textBoxY, 245, 40, 'https://www.gbif.org/country/' + options.countryCode + '/about/datasets');
+        doc.link(50, textBoxY, 500, 40, 'https://www.gbif.org/country/' + options.countryCode);
 }
 
 function projectParticipation(doc, options) {
