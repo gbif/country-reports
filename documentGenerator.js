@@ -38,16 +38,10 @@ function accessAndUsage(doc, options) {
         doc.font('Arial-Bold').fontSize(12)
                 .text('▶ ' + options.i18n.__('accessAndUsage'), 50, 248 + options.Y_OFFSET);
 
-
-        doc.image(options.globalPublicationsChart, 70, 265 + options.Y_OFFSET, {width: 220});
-        doc.font('Arial-Italic')
-                .fontSize(8)
-                .text(options.i18n.__('figure') + ' 1. ' + options.i18n.__('numPeerReviedPublicationsCitingGBIF'), 83, 410 + options.Y_OFFSET, {continued: true, width: 200, align: 'center'});
-
         doc.image(__dirname + '/assets/green_circle.png', 330, 250 + options.Y_OFFSET, {width: 180});
 
         doc.font('Arial').fontSize(10)
-                .text(options.i18n.__('researchersFrom'), 260, 280 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.i18n.__('researchersFrom'), 330, 280 + options.Y_OFFSET, {width: 180, align: 'center'});
         let nameY = (options.countryName.length > 16) ? 290 : 300;
         doc.font('Arial-Bold').fontSize(15)
                 .text(options.countryName, 330, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
