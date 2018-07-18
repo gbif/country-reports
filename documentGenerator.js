@@ -12,9 +12,11 @@ function header(doc, options) {
                 var flagHeight = (38.0/729*522); // Size to the height of the black bar in the logo
                 var flagWidth = flagPng.width * (flagHeight / flagPng.height);
 
-          doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 570 - flagWidth,
-                    45 + options.Y_OFFSET + (38.0/729*58), // Align with top of black bar in logo
-                    {height: flagHeight});
+                doc.rect(570 - flagWidth - 0.25, 45 + options.Y_OFFSET + (38.0/729*58) - 0.25, flagWidth + 0.5, flagHeight + 0.5).lineWidth(1).strokeColor('#dddddd').stroke();
+
+                doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 570 - flagWidth,
+                          45 + options.Y_OFFSET + (38.0/729*58), // Align with top of black bar in logo
+                          {height: flagHeight});
         }
 
         doc.fontSize(26).text(options.countryName, 50, 145 + options.Y_OFFSET);
@@ -209,6 +211,12 @@ function dataMobilization(doc, options) {
 
 function secondaryPageHeader(doc, options, pageNumber, totalPages) {
         if (['FK'].indexOf(options.countryCode) === -1) {
+                var flagPng = PNG.load(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png');
+                var flagHeight = 20.0;
+                var flagWidth = flagPng.width * (flagHeight / flagPng.height);
+
+                doc.rect(50 - 0.25, 52 + options.Y_OFFSET - 0.25, flagWidth + 0.5, flagHeight + 0.5).lineWidth(1).strokeColor('#dddddd').stroke();
+
                 doc.image(__dirname + '/assets/flags/' + options.countryCode.toLowerCase() + '.png', 50, 52 + options.Y_OFFSET, {height: 20});
         }
         doc.image(__dirname + '/assets/green_bar.png', 110, 52 + options.Y_OFFSET, {height: 20, width: 440});
