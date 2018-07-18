@@ -671,7 +671,7 @@ function recentPublishers(doc, options) {
 function dataSharingWithCountryOfOrigin(doc, options) {
         doc.font('Arial-Bold').fillColor('black').fontSize(12).text(options.i18n.__('dataMobilization'), 50, 115);
         doc.font('Arial-Bold').fillColor('#509e2f').fontSize(12);
-        doc.text(options.i18n.__('dataSharingWithCountryOfOrigin') + ' ' + options.countryName, {continued: false, width: 400, align: 'left'});
+        doc.text(options.i18n.__('dataSharingWithCountryOfOrigin') + ' ' + options.countryName, {continued: false, width: 500, align: 'left'});
         let circleY = doc.y + 10;
         doc.image(__dirname + '/assets/green_circle.png', 330, circleY + options.Y_OFFSET, {width: 180});
         let nameY = (options.countryName.length > 16) ? (circleY + 25) : (circleY + 30);
@@ -776,7 +776,7 @@ function topDataContributors(doc, options) {
 function projectParticipation(doc, options) {
         if (options.projectsWithCountryAsPartner && options.projectsWithCountryAsPartner.length > 0) {
                 doc.font('Arial-Bold').fillColor('#509e2f').fontSize(12);
-                doc.text(options.countryName + ' ' + options.i18n.__('participatesInTheseProjects'), 50, doc.y + 40, {continued: false, width: 400, align: 'left'});
+                doc.text(options.countryName + ' ' + options.i18n.__('participatesInTheseProjects'), 50, doc.y + 40, {continued: false, width: 500, align: 'left'});
 
 
                 doc.font('Arial').fontSize(10);
