@@ -199,7 +199,7 @@ function dataMobilization(doc, options) {
         doc.font('Arial-Italic')
                 .fontSize(8)
                 .text(
-                        options.i18n.__('figure') + ' 2. ' + options.i18n.__('numRecordsByInstitutionsInCountry') + ' ' + options.countryName + ', '
+                        options.i18n.__('numRecordsByInstitutionsInCountry') + ' ' + options.countryName + ', '
                         + options.i18n.__('categorizedByKingdom'), 310, 780 + options.Y_OFFSET, {width: '200', align: 'center'});
 }
 
@@ -251,7 +251,7 @@ function dataDownloads(doc, options) {
         doc.image(options.downloadsByMonthChart, 300, 190 + options.Y_OFFSET, {width: 250, height: 150});
         doc.font('Arial-Italic')
                 .fontSize(8)
-                .text(options.i18n.__('figure') + ' 3. ' + options.i18n.__('monthlyDownloadsByUsersInCountry') + ' ' + options.countryName, 300, 340 + options.Y_OFFSET, {width: 250, align: 'center'});
+                .text(options.i18n.__('monthlyDownloadsByUsersInCountry') + ' ' + options.countryName, 300, 340 + options.Y_OFFSET, {width: 250, align: 'center'});
 
         doc.moveTo(50, 390 + options.Y_OFFSET)
                 .lineTo(550, 390 + options.Y_OFFSET)
@@ -544,13 +544,13 @@ function getChangeOverTime(doc, options) {
         doc.image(options.occByKingdomChartAbout, 50, 575, {width: 250, height: 130});
         doc.fillColor('black').font('Arial-Italic')
                 .fontSize(8)
-                .text(options.i18n.__('figure') + ' 4. ' + options.i18n.__('occRecordsAvailableFigText') + ' ' + options.countryName, 83, 713 + options.Y_OFFSET, {width: 200, align: 'center'});
+                .text(options.i18n.__('occRecordsAvailableFigText') + ' ' + options.countryName, 83, 713 + options.Y_OFFSET, {width: 200, align: 'center'});
 
         doc.image(options.speciesByKingdomChartAbout, 300, 575, {width: 250, height: 130});
 
         doc.fillColor('black').font('Arial-Italic')
                 .fontSize(8)
-                .text(options.i18n.__('figure') + ' 5. ' + options.i18n.__('speciesAvailableOccRecords') + ' ' + options.countryName, 333, 713 + options.Y_OFFSET, {width: 200, align: 'center'});
+                .text(options.i18n.__('speciesAvailableOccRecords') + ' ' + options.countryName, 333, 713 + options.Y_OFFSET, {width: 200, align: 'center'});
 
 
         doc.rect(50, 740 + options.Y_OFFSET, 250, 65)
@@ -659,7 +659,7 @@ function recentPublishers(doc, options) {
         doc.font('Arial-Italic')
                 .fontSize(8)
                 .fillColor('black')
-                .text(options.i18n.__('figure') + ' 6. ' + options.i18n.__('numOccDownloadsByOrgsIn') + ' ' + options.countryName, 325, textBoxY, {width: 200, align: 'center'});
+                .text(options.i18n.__('numOccDownloadsByOrgsIn') + ' ' + options.countryName, 325, textBoxY, {width: 200, align: 'center'});
 }
 
 function dataSharingWithCountryOfOrigin(doc, options) {
@@ -691,7 +691,7 @@ function dataSharingWithCountryOfOrigin(doc, options) {
         doc.image(options.occRepatriation, 50, circleY, {width: 270, height: 140});
         doc.font('Arial-Italic')
                 .fontSize(8)
-                .text(options.i18n.__('figure') + ' 7. ' + options.i18n.__('dataSharingWithCountryOfOriginFigureText'), 85, doc.y + 5, {width: '200', align: 'center'});
+                .text(options.i18n.__('dataSharingWithCountryOfOriginFigureText'), 85, doc.y + 5, {width: '200', align: 'center'});
 
         doc.rect(50, 348, 500, 32)
                 .fill('#D3D3D3');
