@@ -762,9 +762,9 @@ function topDataContributors(doc, options) {
 
         doc.fillColor('black').font('Arial-Italic')
                 .fontSize(8).text(options.i18n.__('seeAllContributing') + ': ', 55, textBoxY + 5, {align: 'left', width: 495, continued: true})
-                .fillColor('blue').text('gbif.org/country/' + options.countryCode);
+                .fillColor('blue').text('gbif.org/country/' + options.countryCode + '/about');
 
-        doc.link(50, textBoxY, 500, 20, 'https://www.gbif.org/country/' + options.countryCode);
+        doc.link(50, textBoxY, 500, 20, 'https://www.gbif.org/country/' + options.countryCode + '/about');
 }
 
 function projectParticipation(doc, options) {
