@@ -696,7 +696,7 @@ function dataSharingWithCountryOfOrigin(doc, options) {
         doc.rect(50, 348, 500, 32)
                 .fill('#D3D3D3');
         doc.fillColor('black').font('Arial').fontSize(8).text(
-                options.i18n.__('numRecordsSharedOverTime'),
+                options.i18n.__('numRecordsSharedOverTime', options.countryName),
                 60, 353, {width: 490});
 
         let y = doc.y + 30;
