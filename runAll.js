@@ -5,6 +5,8 @@ let countries = require('./countries');
 
 
 // let countries = ['KH', 'CN', 'TW', 'ID', 'IR', 'NP', 'PK', 'PH', 'KR', 'VN', 'DK', 'FR', 'US'];
+//countries = ['ZA', 'VN', 'MW', 'NP', 'SZ', 'ZW'];
+//countries = ['DK'];
 let running;
 let reportsGeneratedWithSuccess = 0;
 let failedReports = [];
@@ -20,7 +22,7 @@ function runNext() {
             reportRunner.runReport({
                 countryCode: countryCode,
                 locale: 'en',
-                year: 2017,
+                year: 2018,
                 targetStream: running
             });
             reportsGeneratedWithSuccess ++;

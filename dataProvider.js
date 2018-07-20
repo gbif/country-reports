@@ -21,6 +21,7 @@ function getPublicationsGlobal(yearsBack, year) {
     for (let i = yearsBack; i >= 0; i--) {
         years.push(year - i);
     }
+
     _.each(years, function(y) {
         promises.push(rp({method: 'GET', uri: CONTENTFUL_SEARCH_URL + 'literature/_search', body: elasticQueryTemplates.peerReviewedLiterature(y), json: true})
             .then(function(res) {
@@ -413,19 +414,22 @@ async function annualDataGrowth(year, countryCode) {
 
     await eventToPromise(emitter, 'end');
 
-    delete occSnapshotCountMap.snapshot; // get rid of the header
+    delete occSnapshotCountMap.snapsho; // get rid of the header
     let snapshots = Object.keys(occSnapshotCountMap);
-
 
     for (let i = 0; i < snapshots.length; i++) {
         let y = snapshots[i].split('-')[0];
         years[y] = false;
     }
     _.each(years, function(v, k) {
-        if (occSnapshotCountMap[k + '-12']) {
-            years[k] = occSnapshotCountMap[k + '-12']; // there was a december snapshot
-        } else if (occSnapshotCountMap[(parseInt(k) + 1) + '-01']) {
-            years[k] = occSnapshotCountMap[(parseInt(k) + 1) + '-01']; // No december snapshot, but from january next year
+        //if (occSnapshotCountMap[k + '-12']) {
+        //    years[k] = occSnapshotCountMap[k + '-12']; // there was a december snapshot
+        //} else if (occSnapshotCountMap[(parseInt(k) + 1) + '-01']) {
+        //    years[k] = occSnapshotCountMap[(parseInt(k) + 1) + '-01']; // No december snapshot, but from january next year
+        //}
+
+        if (occSnapshotCountMap[k + '-07']) {
+            years[k] = occSnapshotCountMap[k + '-07'];
         }
     });
     if (years[year] && years[parseInt(year) - 1]) {
@@ -433,7 +437,8 @@ async function annualDataGrowth(year, countryCode) {
     } else if (years[year]) {
         return years[year];
     } else {
-        throw new Error('Not possible to calculate data growth');
+        return 0;
+        //throw new Error('Not possible to calculate data growth');
     }
 }
 
@@ -447,8 +452,8 @@ async function getPublishedOccRecords(year, countryCode) {
 }
 
 async function getAccessAndUsageData(year, countryCode) {
-    let twoYearsAgo = moment().subtract(2, 'years').format('YYYY-MM');
-    let lastYear = moment().subtract(1, 'years').format('YYYY');
+    let twoYearsAgo = '2017-01'; //moment().subtract(2, 'years').format('YYYY-MM');
+    let lastYear = '2018'; //moment().subtract(1, 'years').format('YYYY');
     let countryDownloadsData = await rp({method: 'GET', uri: API_BASE_URL_STATS + 'occurrence/download/statistics/downloadsByUserCountry?userCountry=' + countryCode.toLowerCase() + '&fromDate=' + twoYearsAgo, json: true} );
     let totalDownloadsData = await rp({method: 'GET', uri: API_BASE_URL_STATS + 'occurrence/download/statistics/downloadsByUserCountry?&fromDate=' + twoYearsAgo, json: true} );
     let countryDownloads = 0;
@@ -458,6 +463,16 @@ async function getAccessAndUsageData(year, countryCode) {
     });
     _.each(totalDownloadsData[lastYear], function(v) {
         totalDownloads += parseInt(v);
+    });
+
+    _.each(countryDownloadsData['2017'], function(k, v) {
+        if (parseInt(v) >= 7) {
+            countryDownloads += parseInt(k);
+        }
+
+    });
+    _.each(totalDownloadsData['2017'], function(k, v) {
+        if (parseInt(v) >= 7) totalDownloads += parseInt(k);
     });
 
     let res = {

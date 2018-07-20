@@ -69,7 +69,18 @@ function peerReviewedLiterature(optYear, optCountryCode) {
         query.query.constant_score.filter.bool.must.push({'term': {'countriesOfResearcher': optCountryCode}});
     }
     if (typeof optYear !== 'undefined') {
-        query.query.constant_score.filter.bool.must.push({'term': {'year': optYear}});
+        //query.query.constant_score.filter.bool.must.push({'term': {'year': optYear}});
+        //query.query.constant_score.filter.bool.must.push({'term': {'year': ['2017','2018']}});
+        query.query.constant_score.filter.bool.should = [
+            { "term": { "year": 2018 } },
+            { "bool": {
+                "must": [
+                    { "term": { "year": 2017 } },
+                    { "range": { "month": { "gte": 7, "lte": 12 } } }
+                ]
+            }
+            }
+        ];
     }
     return query;
 }
