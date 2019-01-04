@@ -1,6 +1,7 @@
 module.exports = {
-    ANALYTICS_COUNTRY_BASEURL: 'https://www.gbif-uat.org/sites/default/files/gbif_analytics/country/',
-    ANALYTICS_GLOBAL_BASEURL: 'https://www.gbif-uat.org/sites/default/files/gbif_analytics/global/',
+    // Direct to the Apache server, to avoid any caches.
+    ANALYTICS_COUNTRY_BASEURL: 'http://analytics-files.gbif-uat.org/country/',
+    ANALYTICS_GLOBAL_BASEURL: 'http://analytics-files.gbif-uat.org/global/',
 
     API_BASE_URL: 'http://api.gbif.org/v1/',
     API_BASE_URL_STATS: 'http://api.gbif.org/v1/',
