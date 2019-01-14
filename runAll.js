@@ -20,7 +20,6 @@ function runNext() {
             reportRunner.runReport({
                 countryCode: countryCode,
                 locale: 'en',
-                year: 2017,
                 targetStream: running
             });
             reportsGeneratedWithSuccess ++;
