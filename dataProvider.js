@@ -24,7 +24,7 @@ function getPublicationsGlobal(yearsBack, year) {
     _.each(years, function(y) {
         promises.push(rp({method: 'GET', uri: CONTENTFUL_SEARCH_URL + 'literature/_search', body: elasticQueryTemplates.peerReviewedLiterature(y), json: true})
             .then(function(res) {
-                result[y] = parseInt(res.hits.total);
+                result[y] = parseInt(res.hits.total.value);
             })
             .catch(function(err) {
                 console.log(err);
@@ -220,7 +220,7 @@ function getSelectedCountryPublications(countryCode, year) {
     let promises = [
         rp({method: 'POST', uri: CONTENTFUL_SEARCH_URL + 'literature/_search', body: elasticQueryTemplates.peerReviewedLiterature(year, countryCode), json: true})
             .then(function(res) {
-                return res.hits.total;
+                return res.hits.total.value;
             })
             .catch(function(err) {
                 console.log(err);
@@ -228,7 +228,7 @@ function getSelectedCountryPublications(countryCode, year) {
         rp({method: 'POST', uri: CONTENTFUL_SEARCH_URL + 'literature/_search', body: elasticQueryTemplates.peerReviewedLiterature(undefined, countryCode), json: true})
             .then(function(res) {
                 return {
-                    count: res.hits.total,
+                    count: res.hits.total.value,
                     latest: res.hits.hits.map(function(h) {
                         return h._source;
                     }).splice(0, 5)
