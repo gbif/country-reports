@@ -12,6 +12,13 @@ To run the reports using Docker:
 docker build --tag gbif/country-reports .
 ```
 
+Optionally, publish it to our repository:
+
+```
+docker tag gbif/country-reports docker.gbif.org/country-reports:latest
+docker push docker.gbif.org/country-reports:latest
+```
+
 3. Run the image
 
 ```
