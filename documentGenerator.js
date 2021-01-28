@@ -38,23 +38,26 @@ function accessAndUsage(doc, options) {
         doc.font('Arial-Bold').fontSize(12)
                 .text('▶ ' + options.i18n.__('accessAndUsage'), 50, 248 + options.Y_OFFSET);
 
-        doc.image(__dirname + '/assets/green_circle.png', 330, 250 + options.Y_OFFSET, {width: 180});
+        // content width is 500, circle is 180, so offset by margin+160
+        var xOffset = 50+160;
+
+        doc.image(__dirname + '/assets/green_circle.png', xOffset, 250 + options.Y_OFFSET, {width: 180});
 
         doc.font('Arial').fontSize(10)
-                .text(options.i18n.__('researchersFrom'), 330, 280 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.i18n.__('researchersFrom'), xOffset, 280 + options.Y_OFFSET, {width: 180, align: 'center'});
         let nameY = (options.countryName.length > 16) ? 290 : 300;
         doc.font('Arial-Bold').fontSize(15)
-                .text(options.countryName, 330, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.countryName, xOffset, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8)
-                .text(options.i18n.__('contributedTo'), 330, 327 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.i18n.__('contributedTo'), xOffset, 327 + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
-                .text(options.countryPublications.reportYear, 330, 337 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.countryPublications.reportYear, xOffset, 337 + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8).fillColor('black')
-                .text(options.i18n.__('peerReviewedInReportingPeroid', options.year), 340, 355 + options.Y_OFFSET, {width: 160, align: 'center'});
+                .text(options.i18n.__('peerReviewedInReportingPeroid', options.year), xOffset+10, 355 + options.Y_OFFSET, {width: 160, align: 'center'});
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
-                .text(options.countryPublications.allYears, 330, 385 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.countryPublications.allYears, xOffset, 385 + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8).fillColor('black')
-                .text(options.i18n.__('articlesSince'), 330, 405 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.i18n.__('articlesSince'), xOffset, 405 + options.Y_OFFSET, {width: 180, align: 'center'});
 
         doc.moveTo(50, 440 + options.Y_OFFSET)
                 .lineTo(550, 440 + options.Y_OFFSET)

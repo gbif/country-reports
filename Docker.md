@@ -27,8 +27,7 @@ Those arguments:
 
 4. Run the reports
 ```
-$ highcharts-export-server --enableServer 1 &
-$ node runAll.js
+$ highcharts-export-server --enableServer 1 & sleep 1 && node runAll.js
 ```
 
 5. To stop the container
