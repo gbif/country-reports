@@ -143,7 +143,7 @@ function datAvailability(doc, options) {
                 .text('Virus', 300, 550 + options.Y_OFFSET);
         doc.font('Arial-Bold')
                 .fontSize(10)
-                .text(options.countryOccurencesByKingdom.Bacteria.toLocaleString(options.locale), 300, 563 + options.Y_OFFSET);
+                .text(options.countryOccurencesByKingdom.Virus.toLocaleString(options.locale), 300, 563 + options.Y_OFFSET);
         doc.font('Arial')
                 .fontSize(8)
                 .text(options.i18n.__('occurrences'), 300, 576 + options.Y_OFFSET);
