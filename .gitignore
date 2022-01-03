@@ -1,8 +1,4 @@
-# IDE and OS dependent
-.vscode
-.DS_Store
-
 # Application specific
+gbif_analytics/
 node_modules/
 reports/
-

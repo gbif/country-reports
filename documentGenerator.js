@@ -47,7 +47,7 @@ function accessAndUsage(doc, options) {
                 .text(options.i18n.__('researchersFrom'), xOffset, 280 + options.Y_OFFSET, {width: 180, align: 'center'});
         let nameY = (options.countryName.length > 16) ? 290 : 300;
         doc.font('Arial-Bold').fontSize(15)
-                .text(options.countryName, xOffset, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.countryName, xOffset + 5, nameY + options.Y_OFFSET, {width: 170, align: 'center'});
         doc.font('Arial').fontSize(8)
                 .text(options.i18n.__('contributedTo'), xOffset, 327 + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
@@ -55,7 +55,7 @@ function accessAndUsage(doc, options) {
         doc.font('Arial').fontSize(8).fillColor('black')
                 .text(options.i18n.__('peerReviewedInReportingPeroid', options.year), xOffset+10, 355 + options.Y_OFFSET, {width: 160, align: 'center'});
         doc.font('Arial-Bold').fontSize(15).fillColor('white')
-                .text(options.countryPublications.allYears, xOffset, 385 + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.countryPublications.allYears, xOffset, 380 + options.Y_OFFSET, {width: 180, align: 'center'});
         doc.font('Arial').fontSize(8).fillColor('black')
                 .text(options.i18n.__('articlesSince'), xOffset, 405 + options.Y_OFFSET, {width: 180, align: 'center'});
 
@@ -182,7 +182,7 @@ function dataMobilization(doc, options) {
                 .text(options.i18n.__('institutionsFrom'), 70, 645 + options.Y_OFFSET, {width: 180, align: 'center'});
         let nameY = (options.countryName.length > 16) ? 656 : 665;
         doc.font('Arial-Bold').fontSize(15)
-                .text(options.countryName, 70, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.countryName, 75, nameY + options.Y_OFFSET, {width: 170, align: 'center'});
         doc.font('Arial').fontSize(8)
                 .text(options.i18n.__('published'), 70, 692 + options.Y_OFFSET, {width: 180, align: 'center'});
 
@@ -235,7 +235,7 @@ function dataDownloads(doc, options) {
                 .text(options.i18n.__('usersFrom'), 70, 195 + options.Y_OFFSET, {width: 180, align: 'center'});
         let nameY = (options.countryName.length > 16) ? 207 : 215;
         doc.font('Arial-Bold').fontSize(15)
-                .text(options.countryName, 70, nameY + options.Y_OFFSET, {width: 180, align: 'center'});
+                .text(options.countryName, 75, nameY + options.Y_OFFSET, {width: 170, align: 'center'});
         doc.font('Arial').fontSize(8)
                 .text(options.i18n.__('made'), 70, 243 + options.Y_OFFSET, {width: 180, align: 'center'});
 
@@ -674,7 +674,7 @@ function dataSharingWithCountryOfOrigin(doc, options) {
         doc.image(__dirname + '/assets/green_circle.png', 330, circleY + options.Y_OFFSET, {width: 180});
         let nameY = (options.countryName.length > 16) ? (circleY + 25) : (circleY + 30);
         doc.font('Arial-Bold').fontSize(15).fillColor('black')
-                .text(options.countryName, 330, nameY, {width: 180, align: 'center'});
+                .text(options.countryName, 335, nameY, {width: 170, align: 'center'});
         doc.font('Arial').fontSize(8)
                 .text(options.i18n.__('publishesDataFrom'), 330, circleY + 62, {width: 180, align: 'center'});
         doc.font('Arial-Bold').fontSize(15).fillColor('white')

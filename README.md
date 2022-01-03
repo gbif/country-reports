@@ -1,6 +1,6 @@
 # GBIF Activity Reports
 
-Produces the activity reports shown on the GBIF country/area pages, for example [Andorra](http://www.gbif.org/sites/default/files/gbif_analytics/country/AD/GBIF_CountryReport_AD.pdf).
+Produces the activity reports shown on the GBIF country/area pages, for example [Andorra](https://www.gbif.org/sites/default/files/gbif_analytics/country/AD/GBIF_CountryReport_AD.pdf).
 
 See [Usage instructions](Usage.md) for detailed usage.
 
