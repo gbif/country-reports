@@ -1,2 +1,4 @@
+.git*
 *.pdf
+README.md
 reports/
