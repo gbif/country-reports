@@ -36,8 +36,8 @@ Produces the activity reports shown on the GBIF country/area pages, for example 
 
 5. Optionally (and assuming it works), publish it to our repository:
    ```
-   docker tag gbif/country-reports docker.gbif.org/country-reports:latest
-   docker push docker.gbif.org/country-reports:latest
+   docker tag gbif/country-reports docker.gbif.org/country-reports:2022-01
+   docker push docker.gbif.org/country-reports:2022-01
    ```
 
 ## Docker usage (for annual reports)
