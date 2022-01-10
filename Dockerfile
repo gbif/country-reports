@@ -1,4 +1,4 @@
-FROM node:8.9
+FROM node:8
 
 # Create app directory
 RUN mkdir -p /usr/src/app
@@ -19,6 +19,6 @@ COPY . /usr/src/app
 RUN npm install --registry http://repository.gbif.org/content/repositories/npmjs/ --save
 
 # This ought to be run automatically.
-# highcharts-export-server --enableServer 1
+# highcharts-export-server --enableServer 1 --allowCodeExecution 1
 
 CMD [ "bash" ]
