@@ -359,7 +359,7 @@ function getTopDatasets(countryCode) {
 }
 
 function getOccurrenceFacetsForCountry(countryCode) {
-    return rp({method: 'GET', uri: API_BASE_URL + 'occurrence/search?facet=country&facet=datasetKey&limit=0&facetLimit=1000&publishingCountry=' + countryCode, json: true})
+    return rp({method: 'GET', uri: API_BASE_URL + 'occurrence/search?facet=country&facet=datasetKey&limit=0&facetLimit=1000000&publishingCountry=' + countryCode, json: true})
         .then(function(res) {
             let facets = {count: res.count};
             for (let i = 0; i < res.facets.length; i++) {
