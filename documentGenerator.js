@@ -509,7 +509,7 @@ function selectedTaxonomicGroups(doc, options) {
                 .fontSize(8)
                 .text(options.i18n.__('mammals') + ' = ' + options.i18n.__('taxonRank.class') + ' Mammalia', 55, 465 + options.Y_OFFSET, {width: 120});
         doc.text(options.i18n.__('birds') + ' = ' + options.i18n.__('taxonRank.class') + ' Aves', {width: 120});
-        doc.text(options.i18n.__('bonyFish') + ' = ' + options.i18n.__('taxonRank.superclass') + ' Osteichthyes', {width: 120});
+        doc.text(options.i18n.__('bonyFish') + ' = ' + options.i18n.__('taxonRank.superclass') + ' Osteichthyes p.p.', {width: 120});
         doc.text(options.i18n.__('amphibians') + ' = ' + options.i18n.__('taxonRank.class') + ' Amphibia', {width: 120});
 
         doc.font('Arial')
