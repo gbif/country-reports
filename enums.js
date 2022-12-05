@@ -6,7 +6,7 @@ module.exports = {
         {name: 'bonyfish', key: [238, 204]},
         {name: 'amphibians', key: 131},
         {name: 'insects', key: 216},
-        {name: 'reptiles', key: 358},
+        {name: 'reptiles', key: [11418114, 11569602, 11592253, 11493978]},
         {name: 'molluscs', key: 52},
         {name: 'arachnids', key: 367},
         {name: 'floweringplants', key: [220, 196]},
