@@ -16,11 +16,12 @@ Produces the activity reports shown on the GBIF country/area pages, for example 
 
 2. Run the image
    ```
-   docker run --volume $PWD/reports/:/usr/src/app/reports --rm --name country-reports --interactive --tty gbif/country-reports
+   docker run --env OWNER=$(id -u):$(id -g) --volume $PWD/reports/:/usr/src/app/reports --rm --name country-reports --interactive --tty gbif/country-reports
    ```
 
    Those arguments:
 
+   * `--env` sets an environment variable, so ownership of the files can be controlled
    * `--volume $PWD/reports/:/usr/src/app/reports mounts the host directory `./reports` to `/usr/src/app/reports` within the container
    * `--rm` deletes the container when it exits
    * `--name` assigns a name to it
@@ -28,7 +29,7 @@ Produces the activity reports shown on the GBIF country/area pages, for example 
 
 3. Run the reports
    ```
-   $ highcharts-export-server --enableServer 1 --allowCodeExecution 1 & sleep 1 && node runAll.js
+   $ highcharts-export-server --enableServer 1 --allowCodeExecution 1 & sleep 1 && node runAll.js; chown -R $OWNER reports
    ```
 
 4. Stop the container
@@ -47,18 +48,10 @@ The usual process when producing annual analytics reports is
 1. Update URLs in `config.js`, for example to use UAT analytics results if these are not yet in production.
 2. Run the reports using the published Docker image, they should be output to the `reports/` directory.
    ```
-   docker run --volume $PWD/reports/:/usr/src/app/reports --rm --name country-reports --interactive --tty docker.gbif.org/country-reports:latest
-   highcharts-export-server --enableServer 1 --allowCodeExecution 1 & sleep 1 && node runAll.js
+   docker run --env OWNER=$(id -u):$(id -g) --volume $PWD/reports/:/usr/src/app/reports --rm --name country-reports --interactive --tty docker.gbif.org/country-reports:latest
+   highcharts-export-server --enableServer 1 --allowCodeExecution 1 & sleep 1 && node runAll.js; chown -R $OWNER reports
    ```
-3. Move these to an appropriate structure, for example:
-   ```
-   for i in GBIF_CountryReport_??.pdf; do
-       c=${${i%%.pdf}##GBIF_CountryReport_}
-       mkdir -p ../gbif_analytics/country/$c/
-       mv -fb $i ../gbif_analytics/country/$c/
-   done
-   ```
-4. Rsync to the analytics server.
+3. Rsync to the analytics server.
 
 ## Development
 

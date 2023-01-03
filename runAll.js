@@ -12,7 +12,8 @@ function runNext() {
     if (countries.length > 0) {
         let countryCode = countries.pop();
         console.log('Running ' + countryCode);
-        running = fs.createWriteStream('./reports/GBIF_CountryReport_' + countryCode + '.pdf');
+        fs.mkdirSync('./reports/' + countryCode, { recursive: true });
+        running = fs.createWriteStream('./reports/' + countryCode + '/GBIF_CountryReport_' + countryCode + '.pdf');
         running.on('finish', function() {
             setTimeout(runNext, 1000);
         });

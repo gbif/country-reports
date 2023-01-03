@@ -424,8 +424,8 @@ function selectedTaxonomicGroups(doc, options) {
         // third row of images
         doc.image(__dirname + '/assets/selectedGroups/arachnids.png', 55, 320 + options.Y_OFFSET, {width: 50});
         doc.image(__dirname + '/assets/selectedGroups/floweringPlants.png', 180, 320 + options.Y_OFFSET, {width: 50});
-        doc.image(__dirname + '/assets/selectedGroups/gymnosperms.png', 305, 320 + options.Y_OFFSET, {width: 50});
-        doc.image(__dirname + '/assets/selectedGroups/ferns.png', 430, 320 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/ferns.png', 305, 320 + options.Y_OFFSET, {width: 50});
+        doc.image(__dirname + '/assets/selectedGroups/gymnosperms.png', 430, 320 + options.Y_OFFSET, {width: 50});
         // third roww of texts
         doc.fillColor('black').font('Arial-Italic')
                 .fontSize(10)
@@ -449,20 +449,20 @@ function selectedTaxonomicGroups(doc, options) {
 
         doc.fillColor('black').font('Arial-Italic')
                 .fontSize(10)
-                .text(options.i18n.__('gymnosperms'), 365, 330 + options.Y_OFFSET, {width: 60});
+                .text(options.i18n.__('ferns'), 365, 330 + options.Y_OFFSET, {width: 60});
         doc.font('Arial-Bold')
                 .fontSize(10)
-                .text(options.countsForSelectedtaxonomicGroups.gymnosperms.toLocaleString(options.locale));
+                .text(options.countsForSelectedtaxonomicGroups.ferns.toLocaleString(options.locale));
         doc.font('Arial')
                 .fontSize(8)
                 .text(options.i18n.__(options.i18n.__('occurrences')));
 
         doc.fillColor('black').font('Arial-Italic')
                 .fontSize(10)
-                .text(options.i18n.__('ferns'), 490, 330 + options.Y_OFFSET, {width: 60});
+                .text(options.i18n.__('gymnosperms'), 490, 330 + options.Y_OFFSET, {width: 70});
         doc.font('Arial-Bold')
                 .fontSize(10)
-                .text(options.countsForSelectedtaxonomicGroups.ferns.toLocaleString(options.locale));
+                .text(options.countsForSelectedtaxonomicGroups.gymnosperms.toLocaleString(options.locale));
         doc.font('Arial')
                 .fontSize(8)
                 .text(options.i18n.__(options.i18n.__('occurrences')));
@@ -504,35 +504,26 @@ function selectedTaxonomicGroups(doc, options) {
         doc.rect(50, 460 + options.Y_OFFSET, 500, 65)
                 .fill('#D3D3D3');
 
-        doc.font('Arial')
-                .fillColor('black')
-                .fontSize(8)
-                .text(options.i18n.__('mammals') + ' = ' + options.i18n.__('taxonRank.class') + ' Mammalia', 55, 465 + options.Y_OFFSET, {width: 120});
-        doc.text(options.i18n.__('birds') + ' = ' + options.i18n.__('taxonRank.class') + ' Aves', {width: 120});
-        doc.text(options.i18n.__('bonyFish') + ' = ' + options.i18n.__('taxonRank.superclass') + ' Osteichthyes p.p.', {width: 120});
-        doc.text(options.i18n.__('amphibians') + ' = ' + options.i18n.__('taxonRank.class') + ' Amphibia', {width: 120});
+        doc.fillColor('black')
+                .fontSize(8);
 
-        doc.font('Arial')
-                .fillColor('black')
-                .fontSize(8)
-                .text(options.i18n.__('insects') + ' = ' + options.i18n.__('taxonRank.class') + ' Insecta', 175, 465 + options.Y_OFFSET, {width: 120});
-        doc.text(options.i18n.__('reptiles') + ' = ' + options.i18n.__('taxonRank.class') + ' Reptilia', {width: 120});
-        doc.text(options.i18n.__('molluscs') + ' = ' + options.i18n.__('taxonRank.phylum') + ' Mollusca', {width: 120});
-        doc.text(options.i18n.__('arachnids') + ' = ' + options.i18n.__('taxonRank.class') + ' Arachnida', {width: 120});
+        doc.font('Arial').text(options.i18n.__('mammals') + ' = ' + options.i18n.__('taxonRank.class'), 55, 465 + options.Y_OFFSET, {width: 120, continued: true}).font('Arial-Italic').text(' Mammalia');
+        doc.font('Arial').text(options.i18n.__('birds') + ' = ' + options.i18n.__('taxonRank.class'), {width: 120, continued: true}).font('Arial-Italic').text(' Aves');
+        doc.font('Arial').text(options.i18n.__('bonyFish') + ' = ' + options.i18n.__('taxonRank.superclass'), {width: 120, continued: true}).font('Arial-Italic').text(' Osteichthyes', {continued: true}).font('Arial').text(' p.p.');
+        doc.font('Arial').text(options.i18n.__('amphibians') + ' = ' + options.i18n.__('taxonRank.class'), {width: 120, continued: true}).font('Arial-Italic').text(' Amphibia');
 
-        doc.font('Arial')
-                .fillColor('black')
-                .fontSize(8)
-                .text(options.i18n.__('floweringPlants') + ' = ' + options.i18n.__('taxonRank.phylum') + ' Magnoliophyta', 300, 465 + options.Y_OFFSET, {width: 120});
-        doc.text(options.i18n.__('gymnosperms') + ' = ' + options.i18n.__('taxonRank.superclass') + ' Gymnospermae', {width: 120});
+        doc.font('Arial').text(options.i18n.__('insects') + ' = ' + options.i18n.__('taxonRank.class'), 175, 465 + options.Y_OFFSET, {width: 120, continued: true}).font('Arial-Italic').text(' Insecta');
+        doc.font('Arial').text(options.i18n.__('reptiles') + ' = ' + options.i18n.__('taxonRank.class'), {width: 120, continued: true}).font('Arial-Italic').text(' Testudines, Sphenodontia, Squamata & Crocodylia');
+        doc.font('Arial').text(options.i18n.__('molluscs') + ' = ' + options.i18n.__('taxonRank.phylum'), {width: 120, continued: true}).font('Arial-Italic').text(' Mollusca');
 
-        doc.font('Arial')
-                .fillColor('black')
-                .fontSize(8)
-                .text(options.i18n.__('ferns') + ' = ' + options.i18n.__('taxonRank.phylum') + ' Pteridophyta', 425, 465 + options.Y_OFFSET, {width: 120});
-        doc.text(options.i18n.__('mosses') + ' = ' + options.i18n.__('taxonRank.phylum') + ' Bryophyta', {width: 120});
-        doc.text(options.i18n.__('sacFungi') + ' = ' + options.i18n.__('taxonRank.phylum') + ' Ascomycota', {width: 120});
-        doc.text(options.i18n.__('basidiomycota') + ' = ' + options.i18n.__('taxonRank.phylum') + ' Basidiomycota', {width: 120});
+        doc.font('Arial').text(options.i18n.__('arachnids') + ' = ' + options.i18n.__('taxonRank.class'), 300, 465 + options.Y_OFFSET, {width: 120, continued: true}).font('Arial-Italic').text(' Arachnida');
+        doc.font('Arial').text(options.i18n.__('floweringPlants') + ' = ' + options.i18n.__('taxonRank.phylum'), {width: 120, continued: true}).font('Arial-Italic').text(' Magnoliophyta');
+        doc.font('Arial').text(options.i18n.__('gymnosperms') + ' = ' + options.i18n.__('taxonRank.superclass'), {width: 120, continued: true}).font('Arial-Italic').text(' Gymnospermae');
+
+        doc.font('Arial').text(options.i18n.__('ferns') + ' = ' + options.i18n.__('taxonRank.phylum'), 425, 465 + options.Y_OFFSET, {width: 120, continued: true}).font('Arial-Italic').text(' Pteridophyta');
+        doc.font('Arial').text(options.i18n.__('mosses') + ' = ' + options.i18n.__('taxonRank.phylum'), {width: 120, continued: true}).font('Arial-Italic').text(' Bryophyta');
+        doc.font('Arial').text(options.i18n.__('sacFungi') + ' = ' + options.i18n.__('taxonRank.phylum'), {width: 120, continued: true}).font('Arial-Italic').text(' Ascomycota');
+        doc.font('Arial').text(options.i18n.__('basidiomycota') + ' = ' + options.i18n.__('taxonRank.phylum'), {width: 120, continued: true}).font('Arial-Italic').text(' Basidiomycota');
 
         doc.moveTo(50, 540 + options.Y_OFFSET)
                 .lineTo(550, 540 + options.Y_OFFSET)
