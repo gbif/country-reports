@@ -1,4 +1,5 @@
 {
+	"test": "Testing if Crowdin is active",
 	"introduction": "This report provides a series of summary charts, statistics and other details about the mobilization and use of open-access species data through the GBIF network, relating to users and participating institutions in %s. These metrics show status at the time of report generation, unless otherwise noted. Taken together, the elements of this report can help guide and measure progress toward the information needs for biodiversity research, as well as for national commitments on biodiversity and sustainable development.",
 	"countryReport": "Activity report",
 	"twelveMonthReport": "12-month report",
