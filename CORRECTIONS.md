@@ -1,9 +1,9 @@
 # Making corrections
 
 We have occasionally published sets of reports with errors, often affecting only a small number of
-reports.  If these are not discovered quickly, correcting them is complicated — much of the data
-is live as of the day the report is generated (ideally as soon to 1 January as possible). It can be
-easier to edit the existing PDFs.
+reports.  If the cached HTTP requests are no longer available then correcting them is complicated
+— much of the data is live as of the day the report is generated (ideally as soon to 1 January as
+possible). It can be easier to edit the existing PDFs.
 
 Tools that can be used for manual correction:
 

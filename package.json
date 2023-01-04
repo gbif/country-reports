@@ -14,6 +14,7 @@
     "i18n-2": "",
     "lodash": "^4.17.10",
     "moment": "^2.22.1",
+    "caching-proxy": "^1.0.0",
     "pdfkit": "^0.8.3",
     "request": "^2.85.0",
     "request-promise": "^4.2.2"

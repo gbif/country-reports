@@ -16,7 +16,7 @@ Produces the activity reports shown on the GBIF country/area pages, for example 
 
 2. Run the image
    ```
-   docker run --env OWNER=$(id -u):$(id -g) --volume $PWD/reports/:/usr/src/app/reports --rm --name country-reports --interactive --tty gbif/country-reports
+   docker run --env OWNER=$(id -u):$(id -g) --volume $PWD/reports/:/usr/src/app/reports --volume $PWD/cached-data/:/usr/src/app/cached-data --rm --name country-reports --interactive --tty gbif/country-reports
    ```
 
    Those arguments:
@@ -29,7 +29,7 @@ Produces the activity reports shown on the GBIF country/area pages, for example 
 
 3. Run the reports
    ```
-   $ highcharts-export-server --enableServer 1 --allowCodeExecution 1 & sleep 1 && node runAll.js; chown -R $OWNER reports
+   ./runAll.sh
    ```
 
 4. Stop the container
@@ -48,8 +48,8 @@ The usual process when producing annual analytics reports is
 1. Update URLs in `config.js`, for example to use UAT analytics results if these are not yet in production.
 2. Run the reports using the published Docker image, they should be output to the `reports/` directory.
    ```
-   docker run --env OWNER=$(id -u):$(id -g) --volume $PWD/reports/:/usr/src/app/reports --rm --name country-reports --interactive --tty docker.gbif.org/country-reports:latest
-   highcharts-export-server --enableServer 1 --allowCodeExecution 1 & sleep 1 && node runAll.js; chown -R $OWNER reports
+   docker run --env OWNER=$(id -u):$(id -g) --volume $PWD/reports/:/usr/src/app/reports --volume $PWD/cached-data/:/usr/src/app/cached-data --rm --name country-reports --interactive --tty docker.gbif.org/country-reports:latest
+   ./runAll.sh
    ```
 3. Rsync to the analytics server.
 
@@ -72,6 +72,11 @@ Start the export server:
 
 ```
 highcharts-export-server --enableServer 1
+```
+
+Start the caching proxy, or change `config.json` to avoid it:
+```
+node node_modules/caching-proxy/start.js -d cached-data/ > /dev/null
 ```
 
 Install the dependencies of this project, by moving into the project directory (where package.json is) and do:

@@ -13,7 +13,6 @@ const CONTENTFUL_SEARCH_URL = require('./config').CONTENTFUL_SEARCH_URL;
 const ANALYTICS_COUNTRY_BASEURL = require('./config').ANALYTICS_COUNTRY_BASEURL;
 const ANALYTICS_GLOBAL_BASEURL = require('./config').ANALYTICS_GLOBAL_BASEURL;
 
-
 function getPublicationsGlobal(yearsBack, year) {
     let promises = [];
     let result = {};
