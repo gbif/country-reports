@@ -75,11 +75,11 @@ function datAvailability(doc, options) {
         doc.image(__dirname + '/assets/kingdoms/fungi.png', 305, 470 + options.Y_OFFSET, {width: 50});
         doc.image(__dirname + '/assets/kingdoms/unknown.png', 430, 470 + options.Y_OFFSET, {width: 50});
 
-        doc.image(__dirname + '/assets/kingdoms/protozoa.png', 50, 545 + options.Y_OFFSET, {width: 40});
-        doc.image(__dirname + '/assets/kingdoms/bacteria.png', 150, 545 + options.Y_OFFSET, {width: 40});
-        doc.image(__dirname + '/assets/kingdoms/virus.png', 250, 545 + options.Y_OFFSET, {width: 40});
-        doc.image(__dirname + '/assets/kingdoms/chromista.png', 350, 545 + options.Y_OFFSET, {width: 40});
-        doc.image(__dirname + '/assets/kingdoms/archaea.png', 450, 545 + options.Y_OFFSET, {width: 40});
+        doc.image(__dirname + '/assets/kingdoms/protozoa.png', 100, 545 + options.Y_OFFSET, {width: 40});
+        doc.image(__dirname + '/assets/kingdoms/bacteria.png', 200, 545 + options.Y_OFFSET, {width: 40});
+        //doc.image(__dirname + '/assets/kingdoms/virus.png', 250, 545 + options.Y_OFFSET, {width: 40});
+        doc.image(__dirname + '/assets/kingdoms/chromista.png', 300, 545 + options.Y_OFFSET, {width: 40});
+        doc.image(__dirname + '/assets/kingdoms/archaea.png', 400, 545 + options.Y_OFFSET, {width: 40});
 
         // First row of kingdoms
         doc.font('Arial-Italic')
@@ -120,51 +120,52 @@ function datAvailability(doc, options) {
                 .text(options.i18n.__('occurrences'), 495, 513 + options.Y_OFFSET);
         // Second row of kingdoms
 
+        let x = 50;
         doc.font('Arial-Italic')
                 .fontSize(8)
-                .text('Protozoa', 100, 550 + options.Y_OFFSET);
+                .text('Protozoa', x+100, 550 + options.Y_OFFSET);
         doc.font('Arial-Bold')
                 .fontSize(10)
-                .text(options.countryOccurencesByKingdom.Protozoa.toLocaleString(options.locale), 100, 563 + options.Y_OFFSET);
+                .text(options.countryOccurencesByKingdom.Protozoa.toLocaleString(options.locale), x+100, 563 + options.Y_OFFSET);
         doc.font('Arial')
                 .fontSize(8)
-                .text(options.i18n.__('occurrences'), 100, 576 + options.Y_OFFSET);
+                .text(options.i18n.__('occurrences'), x+100, 576 + options.Y_OFFSET);
         doc.font('Arial-Italic')
                 .fontSize(8)
-                .text('Bacteria', 200, 550 + options.Y_OFFSET);
+                .text('Bacteria', x+200, 550 + options.Y_OFFSET);
         doc.font('Arial-Bold')
                 .fontSize(10)
-                .text(options.countryOccurencesByKingdom.Bacteria.toLocaleString(options.locale), 200, 563 + options.Y_OFFSET);
+                .text(options.countryOccurencesByKingdom.Bacteria.toLocaleString(options.locale), x+200, 563 + options.Y_OFFSET);
         doc.font('Arial')
                 .fontSize(8)
-                .text(options.i18n.__('occurrences'), 200, 576 + options.Y_OFFSET);
+                .text(options.i18n.__('occurrences'), x+200, 576 + options.Y_OFFSET);
+        //doc.font('Arial-Italic')
+        //        .fontSize(8)
+        //        .text('Virus', 300, 550 + options.Y_OFFSET);
+        //doc.font('Arial-Bold')
+        //        .fontSize(10)
+        //        .text(options.countryOccurencesByKingdom.Virus.toLocaleString(options.locale), 300, 563 + options.Y_OFFSET);
+        //doc.font('Arial')
+        //        .fontSize(8)
+        //        .text(options.i18n.__('occurrences'), 300, 576 + options.Y_OFFSET);
         doc.font('Arial-Italic')
                 .fontSize(8)
-                .text('Virus', 300, 550 + options.Y_OFFSET);
+                .text('Chromista', x+300, 550 + options.Y_OFFSET);
         doc.font('Arial-Bold')
                 .fontSize(10)
-                .text(options.countryOccurencesByKingdom.Virus.toLocaleString(options.locale), 300, 563 + options.Y_OFFSET);
+                .text(options.countryOccurencesByKingdom.Chromista.toLocaleString(options.locale), x+300, 563 + options.Y_OFFSET);
         doc.font('Arial')
                 .fontSize(8)
-                .text(options.i18n.__('occurrences'), 300, 576 + options.Y_OFFSET);
+                .text(options.i18n.__('occurrences'), x+300, 576 + options.Y_OFFSET);
         doc.font('Arial-Italic')
                 .fontSize(8)
-                .text('Chromista', 400, 550 + options.Y_OFFSET);
+                .text('Archaea', x+400, 550 + options.Y_OFFSET);
         doc.font('Arial-Bold')
                 .fontSize(10)
-                .text(options.countryOccurencesByKingdom.Chromista.toLocaleString(options.locale), 400, 563 + options.Y_OFFSET);
+                .text(options.countryOccurencesByKingdom.Archaea.toLocaleString(options.locale), x+400, 563 + options.Y_OFFSET);
         doc.font('Arial')
                 .fontSize(8)
-                .text(options.i18n.__('occurrences'), 400, 576 + options.Y_OFFSET);
-        doc.font('Arial-Italic')
-                .fontSize(8)
-                .text('Archaea', 500, 550 + options.Y_OFFSET);
-        doc.font('Arial-Bold')
-                .fontSize(10)
-                .text(options.countryOccurencesByKingdom.Archaea.toLocaleString(options.locale), 500, 563 + options.Y_OFFSET);
-        doc.font('Arial')
-                .fontSize(8)
-                .text(options.i18n.__('occurrences'), 500, 576 + options.Y_OFFSET);
+                .text(options.i18n.__('occurrences'), x+400, 576 + options.Y_OFFSET);
 
         doc.moveTo(50, 598 + options.Y_OFFSET)
                 .lineTo(550, 598 + options.Y_OFFSET)
