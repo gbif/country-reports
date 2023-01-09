@@ -21,9 +21,9 @@ function getPublicationsGlobal(yearsBack, year) {
         years.push(year - i);
     }
     _.each(years, function(y) {
-        promises.push(rp({method: 'GET', uri: CONTENTFUL_SEARCH_URL + 'literature/_search', body: elasticQueryTemplates.peerReviewedLiterature(y), json: true})
+        promises.push(rp({method: 'GET', uri: API_BASE_URL + 'literature/search?peerReview=true&relevance=GBIF_USED&year=' + y + '&limit=0', json: true})
             .then(function(res) {
-                result[y] = parseInt(res.hits.total.value);
+                result[y] = parseInt(res.count);
             })
             .catch(function(err) {
                 console.log(err);
@@ -92,7 +92,6 @@ function getPublicationsGlobal(yearsBack, year) {
                 console.log(err);
             });
     }).catch(function(err) {
-        //   console.log(years)
         console.log(err);
     });
 }
@@ -217,20 +216,18 @@ async function getRecordsPublishedByCountryDownloadedByMonth(country, year) {
 
 function getSelectedCountryPublications(countryCode, year) {
     let promises = [
-        rp({method: 'POST', uri: CONTENTFUL_SEARCH_URL + 'literature/_search', body: elasticQueryTemplates.peerReviewedLiterature(year, countryCode), json: true})
+        rp({method: 'GET', uri: API_BASE_URL + 'literature/search?peerReview=true&relevance=GBIF_USED&countriesOfResearcher=' + countryCode + '&year=' + year, json: true})
             .then(function(res) {
-                return res.hits.total.value;
+                return res.count;
             })
             .catch(function(err) {
                 console.log(err);
             }),
-        rp({method: 'POST', uri: CONTENTFUL_SEARCH_URL + 'literature/_search', body: elasticQueryTemplates.peerReviewedLiterature(undefined, countryCode), json: true})
+        rp({method: 'GET', uri: API_BASE_URL + 'literature/search?peerReview=true&relevance=GBIF_USED&countriesOfResearcher=' + countryCode + '&year=2008,' + year, json: true})
             .then(function(res) {
                 return {
-                    count: res.hits.total.value,
-                    latest: res.hits.hits.map(function(h) {
-                        return h._source;
-                    }).splice(0, 5)
+                    count: res.count,
+                    latest: res.results.splice(0, 5)
                 };
             })
             .catch(function(err) {
@@ -447,6 +444,7 @@ async function getPublishedOccRecords(year, countryCode) {
 }
 
 async function getAccessAndUsageData(year, countryCode) {
+    // This retrieves up to 24 months of data, but uses only the report year's months.
     let twoYearsAgo = moment().subtract(2, 'years').format('YYYY-MM');
     let lastYear = moment().subtract(1, 'years').format('YYYY');
     let countryDownloadsData = await rp({method: 'GET', uri: API_BASE_URL_STATS + 'occurrence/download/statistics/downloadsByUserCountry?userCountry=' + countryCode.toLowerCase() + '&fromDate=' + twoYearsAgo, json: true} );
@@ -486,8 +484,8 @@ async function getAccessAndUsageData(year, countryCode) {
 }
 
 async function getDownloadedOccurrencesPublishedByCountry(year, countryCode) {
-    let lastYear = moment().subtract(1, 'years').format('YYYY-MM-DD');
-    let now = moment().format('YYYY-MM-DD');
+    let lastYear = moment([year]).format('YYYY-01'); // In API, this >= field
+    let now = moment([year]).add(1, 'years').format('YYYY-01'); // And this is <
     let countryOccDownloadsData =
      await rp(
          {method: 'GET',

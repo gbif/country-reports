@@ -58,8 +58,10 @@ function compileReport(countryCode, options, targetStream) {
 function runReport(options) {
     let countryCode = options.countryCode;
     let locale = options.locale;
-    let year = options.year || (new Date().getFullYear() - 1);
+    let year = options.year;
     let targetStream = options.targetStream;
+
+    console.log("Running report:", countryCode, locale, year);
 
     let promises = [
         dataProvider.getPublicationsGlobal(8, year),

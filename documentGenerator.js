@@ -287,7 +287,7 @@ function recentPeerReviewed(doc, options) {
                                 }).join(', ') + '.';
                         let result = {
                                 txt: authors + ' (' + p.year + ') ' + p.title + '. ',
-                                source: p.source + '. '
+                                source: (typeof p.source !== 'undefined') ? p.source + '. ' : ' '
                         };
                         if (p.identifiers && p.identifiers.doi) {
                                 result.doi = 'https://doi.org/' + p.identifiers.doi;
