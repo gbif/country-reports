@@ -1,4 +1,5 @@
 .git*
 *.pdf
 README.md
+cached-data/
 reports/
