@@ -329,9 +329,9 @@ function recentPeerReviewed(doc, options) {
 
                 doc.fillColor('black').font('Arial-Italic')
                         .fontSize(8).text(options.i18n.__('seeAllResearchFromThisCountry'), 385, textBoxY + 5, {align: 'right', width: 160})
-                        .fillColor('blue').text('gbif.org/country/' + options.countryCode + '/publications', {align: 'right', width: 160});
+                        .fillColor('blue').text('gbif.org/country/' + options.countryCode + '/publications/from', {align: 'right', width: 160});
 
-                doc.link(385, textBoxY, 165, 32, 'https://www.gbif.org/country/' + options.countryCode + '/publications');
+                doc.link(385, textBoxY, 165, 32, 'https://www.gbif.org/country/' + options.countryCode + '/publications/from');
         }
 }
 
