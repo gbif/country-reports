@@ -11,7 +11,7 @@ Produces the activity reports shown on the GBIF country/area pages, for example 
 
 1. Build the Docker image (see the [Dockerfile](./Dockerfile)):
    ```
-   docker build --pull --tag gbif/country-reports .
+   docker build --pull --tag docker.gbif.org/country-reports .
    ```
 
 2. Run the image
@@ -37,8 +37,8 @@ Produces the activity reports shown on the GBIF country/area pages, for example 
 
 5. Optionally (and assuming it works), publish it to our repository:
    ```
-   docker tag gbif/country-reports docker.gbif.org/country-reports:2022-01
-   docker push docker.gbif.org/country-reports:2022-01
+   docker tag docker.gbif.org/country-reports docker.gbif.org/country-reports:2024-01
+   docker push docker.gbif.org/country-reports:2024-01
    ```
 
 ## Docker usage (for annual reports)
@@ -48,7 +48,7 @@ The usual process when producing annual analytics reports is
 1. Update URLs in `config.js`, for example to use UAT analytics results if these are not yet in production, and rebuild the Docker image.
 2. Run the reports using the most recent Docker image, they should be output to the `reports/` directory.
    ```
-   docker run --env OWNER=$(id -u):$(id -g) --volume $PWD/reports/:/usr/src/app/reports --volume $PWD/cached-data/:/usr/src/app/cached-data --rm --name country-reports --interactive --tty gbif/country-reports:latest
+   docker run --env OWNER=$(id -u):$(id -g) --volume $PWD/reports/:/usr/src/app/reports --volume $PWD/cached-data/:/usr/src/app/cached-data --rm --name country-reports --interactive --tty docker.gbif.org/country-reports:2024-01
    ./runAll.sh
    ```
 3. Rsync to the analytics server.
