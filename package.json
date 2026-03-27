@@ -7,7 +7,7 @@
     "url": "https://github.com/gbif/country-reports"
   },
   "dependencies": {
-    "eslint": "^4.19.1",
+    "eslint": "^8.31.0",
     "eslint-config-google": "^0.9.1",
     "event-to-promise": "^0.8.0",
     "fast-csv": "^2.4.1",
@@ -16,7 +16,7 @@
     "moment": "^2.22.1",
     "caching-proxy": "^1.0.0",
     "pdfkit": "^0.8.3",
-    "request": "^2.85.0",
+    "request": "^2.88.2",
     "request-promise": "^4.2.2"
   },
   "engines": {
