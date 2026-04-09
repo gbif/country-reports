@@ -12,7 +12,7 @@
     "event-to-promise": "^0.8.0",
     "fast-csv": "^2.4.1",
     "i18n-2": "",
-    "lodash": "^4.17.10",
+    "lodash": "^4.17.21",
     "moment": "^2.22.1",
     "caching-proxy": "^1.0.0",
     "pdfkit": "^0.8.3",
